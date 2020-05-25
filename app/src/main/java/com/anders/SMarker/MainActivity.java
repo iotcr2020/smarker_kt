@@ -202,6 +202,7 @@ public class MainActivity extends AppCompatActivity implements DialogInterface.O
             public void onClick(View view){
                 long currentClickTime= SystemClock.uptimeMillis();
                 long elapsedTime=currentClickTime-mLastClickTime;
+
                 if(elapsedTime > MIN_CLICK_INTERVAL){
                     if (isService) {
                         mLastClickTime=currentClickTime;
