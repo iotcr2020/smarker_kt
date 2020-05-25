@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!--설정 화면-->
+    <!--헬맷설정-->
+    <string-array name="setting_str_time">
+        <item>3초</item>
+        <item>4초</item>
+        <item>5초</item>
+    </string-array>
+    <string-array name="setting_str_battery">
+        <item>설정안함</item>
+        <item>20% 이하</item>
+        <item>25% 이하</item>
+        <item>30% 이하</item>
+        <item>35% 이하</item>
+    </string-array>
+    <string-array name="setting_str_sensing">
+        <item>하나이상 접촉</item>
+        <item>모든센서 접촉</item>
+    </string-array>
+    <!--안전모 설정-->
+    <string-array name="setting_helmet_time">
+        <item>3초</item>
+        <item>5초</item>
+        <item>7초</item>
+        <item>10초</item>
+    </string-array>
+    <string-array name="setting_helmet_battery">
+        <item>20% 이하</item>
+        <item>25% 이하</item>
+        <item>30% 이하</item>
+        <item>35% 이하</item>
+        <item>설정안함</item>
+    </string-array>
+    <string-array name="setting_helmet_acl">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+        <item>6</item>
+        <item>7</item>
+        <item>8</item>
+        <item>9</item>
+        <item>10</item>
+        <item>11</item>
+    </string-array>
+    <!--기타 설정-->
+    <string-array name="setting_etc_time">
+        <item>10초</item>
+        <item>30초</item>
+        <item>1분</item>
+        <item>2분</item>
+    </string-array>
+    <string-array name="setting_etc_receiver">
+        <item>모두 알림</item>
+        <item>현장 관리자</item>
+        <item>현장 팀원</item>
+    </string-array>
+
+
+</resources>

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/bottom_main"
+        android:icon="@drawable/ic_main"
+        android:iconTint="@color/grey_50"
+        android:title="" />
+
+    <item
+        android:id="@+id/bottom_work"
+        android:icon="@drawable/ic_work"
+        android:iconTint="@color/grey_50"
+        android:title="" />
+
+    <item
+        android:id="@+id/bottom_message"
+        android:icon="@drawable/ic_message"
+        android:iconTint="@color/grey_50"
+        android:title="" />
+
+    <item
+        android:id="@+id/bottom_info"
+        android:icon="@drawable/ic_info"
+        android:iconTint="@color/grey_50"
+        android:title="" />
+
+    <item
+        android:id="@+id/bottom_team"
+        android:icon="@drawable/ic_group"
+        android:title="" />
+</menu>

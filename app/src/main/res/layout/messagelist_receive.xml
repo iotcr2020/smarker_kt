@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:orientation="horizontal"
+        android:paddingLeft="@dimen/spacing_mlarge"
+        android:paddingTop="@dimen/spacing_medium"
+        android:paddingRight="@dimen/spacing_middle"
+        android:paddingBottom="@dimen/spacing_medium">
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="전체메세지"
+            android:textSize="15sp" />
+
+        <TextView
+            android:id="@+id/message_cnt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="@dimen/spacing_medium"
+            android:textColor="@color/orange_700"
+            android:textSize="15sp" />
+
+        <View
+            android:id="@+id/view27"
+            android:layout_width="@dimen/spacing_medium"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+
+        <CheckBox
+            android:id="@+id/non_read_chk"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checked="false"
+            android:text="안읽은메세지"
+            android:textColor="@color/grey_90" />
+
+        <View
+            android:id="@+id/view28"
+            android:layout_width="@dimen/spacing_xmedium"
+            android:layout_height="0dp" />
+
+        <TextView
+            android:id="@+id/non_message_cnt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAlignment="textEnd"
+            android:textColor="@color/orange_700" />
+
+    </LinearLayout>
+    <android.support.v7.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="5dp"
+        android:id="@+id/receive_list"/>
+
+
+</LinearLayout>

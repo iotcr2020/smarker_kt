@@ -1,0 +1,45 @@
+<resources>
+    <string name="app_name">SMarker</string>
+    <string name="app_service">SMarker 서비스가 실행중입니다.</string>
+    <string name="agree_title">하단의 개인정보 및 위치제공에 대한 안내를 끝까지 읽고 동의해주세요</string>
+    <string name="agree_chk_01">개인정보 수집·이용 동의</string>
+    <string name="agree_chk_02">개인정보 제3자 제공 동의</string>
+    <string name="agree_btn">동의함</string>
+    <string name="agree_text_01">  회사는 “KT S-Marker 서비스”에 관련하여 아래 개인정보를 수집·이용합니다.
+
+  1.      수집·이용 목적 : 서비스 운용, 근로자 안전환경 증진, 긴급상황 알림, 안전작업제공자료로 활용
+  2.      수집·이용 항목 : 인적사항(소속/이름/연락처), 턱끈 모듈 착용 정보(착용 상태, 착용 횟수, 착용 시간), 스마트폰 GPS 위치 정보, 미세먼지 모듈에서 수집된 미세먼지 농도
+  3.      보유 및 이용기간 : 서비스 운용기간
+
+  * 이용자는 동의를 거부할 권리가 있으며, 다만 동의하지 않을 경우 근로자 안전환경 증진을 위한 KT S-Marker 서비스 이용이 불가합니다.
+  개인정보처리방침 참고 http://ktsmarker.cafe24.com/Privacy_policy.html
+</string>
+    <string name="agree_text_02">  “KT S-Marker 서비스”에 관련하여 회사는 아래와 같이 개인정보를 제3자에게 제공합니다.
+
+  1.      개인정보를 제공받는 자 : 안전관리자 또는 권한을 부여받은 자
+  2.      개인정보를 제공받는 자의 이용목적 : 서비스 운용, 근로자 안전환경 증진, 긴급상황 알림, 안전작업제공자료로 활용
+  3.      제공하는 개인정보의 항목 : 인적사항(소속/이름/연락처), 턱끈 모듈 착용 정보(착용 상태, 착용 횟수, 착용 시간), 스마트폰 GPS 위치 정보, 미세먼지 모듈에서 수집된 미세먼지 농도
+  4.      개인정보를 제공받는 자의 개인정보 보유 및 이용기간 : 서비스 운용기간
+
+  * 이용자는 동의를 거부할 권리가 있으며, 다만 동의하지 않을 경우 근로자 안전환경 증진을 위한 KT S-Marker 서비스 이용이 불가합니다.</string>
+
+    <string name="google_maps_key" templateMergeStrategy="preserve" translatable="false">
+        AIzaSyC3SrcUtXXXXXXXXXXXXXXXXXXXXXX
+    </string>
+
+    <string name="admob_app_id">ca-app-pub-3239677920600357~2463316049</string>
+
+    <string name="default_notification_channel_id">Default</string>
+
+    <!-- ble items -->
+    <!--ble Menu items -->
+
+    <string name="permission_1">[설정] > [권한] 에서 권한을 허용할 수 있습니다.</string>
+    <string name="permission_2">사진 및 파일을 저장하기 위하여 접근 권한이 필요합니다.</string>
+
+    <string name="dialogAlaram1">일반</string>
+    <string name="dialogAlaram2">긴급</string>
+    <string name="dialogAlaram3">팀원</string>
+
+    <string name="send_message">전송</string>
+</resources>

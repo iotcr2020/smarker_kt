@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "2325038593",
+    "firebase_url": "https://smarker-acbd3.firebaseio.com",
+    "project_id": "smarker-acbd3",
+    "storage_bucket": "smarker-acbd3.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:2325038593:android:dcee461a68f56d46e86200",
+        "android_client_info": {
+          "package_name": "com.anders.SMarker"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "2325038593-583dga1ti0q5cbpkjjkldp35bbi3s5tl.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyACl7VF8SitEmNqOLkrmlHBRToz3a_OFxc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "2325038593-583dga1ti0q5cbpkjjkldp35bbi3s5tl.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

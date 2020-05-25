@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/btnRefresh"
+        android:icon="@drawable/ic_refresh"
+        android:orderInCategory="100"
+        android:title="새로고침"
+        android:iconTint="@android:color/black"
+        android:visible="false"
+        app:showAsAction="always" />
+    <item
+        android:id="@+id/btnEmergency"
+        android:icon="@drawable/emergency"
+        android:orderInCategory="100"
+        android:title="알림"
+        android:iconTint="@android:color/black"
+        app:showAsAction="always" />
+
+    <item
+        android:id="@+id/action_settings"
+        android:icon="@drawable/popup_setting"
+        android:orderInCategory="100"
+        android:title="환경설정"
+        app:showAsAction="always"
+ />
+    <!--<item
+        android:id="@+id/action_settings"
+        android:orderInCategory="100"
+        android:title="환경설정"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/action_profile"
+        android:orderInCategory="100"
+        android:title="프로필"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/action_team"
+        android:orderInCategory="100"
+        android:title="팀원관리"
+        android:visible="false"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/action_message"
+        android:orderInCategory="100"
+        android:title="메시지관리"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/action_work"
+        android:orderInCategory="100"
+        android:title="나의 작업환경"
+        app:showAsAction="never" />-->
+</menu>

@@ -1,0 +1,8 @@
+C:\Users\msi\Desktop\alba\smarker_kt\app\appkey\smarker_key.jks
+
+비밀번호:  pink2073
+Alias: smarker 
+비밀번호: 황예림1
+
+Validity years 22
+
