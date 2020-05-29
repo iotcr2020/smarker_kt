@@ -309,7 +309,7 @@ public class ListTeamInfo extends AppCompatActivity {
         }
         actionModeCallback = new ActionModeCallback();
 
-        initTimer();
+        //initTimer();
     }
 
     private void teamListView()
