@@ -22,6 +22,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.Handler;
 import android.os.IBinder;
 import android.os.Message;
 import android.os.Messenger;
@@ -95,6 +96,7 @@ public class MainActivity extends AppCompatActivity implements DialogInterface.O
 
     private ImageView imgFamilyPhoto;
     private Button btnStartStop;
+    private Button btnGoConnect;
 
     private LinearLayout warninglyo;
     private RecyclerView alertrecyclerview;
@@ -102,6 +104,7 @@ public class MainActivity extends AppCompatActivity implements DialogInterface.O
     public static ArrayList<MainAlertList> alertLists= null;
     private AdapterMainAlertList adapterMainAlertList= null;
 
+    private final static int LOADING_DURATION = 2500;
     private static final int FROM_CAMERA = 0;
     private static final int FROM_ALBUM = 1;
     private static final int REQUEST_IMAGE_CROP = 4444;
@@ -186,6 +189,18 @@ public class MainActivity extends AppCompatActivity implements DialogInterface.O
             @Override
             public void onClick(View view){
                 chageWorkstate();
+            }
+        });
+
+        btnGoConnect = (Button)findViewById(R.id.btnGoConnect);
+        btnGoConnect.setOnClickListener(new Button.OnClickListener(){
+            @Override
+            public void onClick(View view){
+                Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+                BleService.isForeground = false;
+                if (gattServiceIntent != null) stopService(gattServiceIntent);
+                startActivity(intent);
+                finish();
             }
         });
 
@@ -996,8 +1011,6 @@ public class MainActivity extends AppCompatActivity implements DialogInterface.O
 
 
         } // End else block
-
-
     }
 
     private void carmeraImageSelect() {//사용자 이미지 넣기
@@ -1537,7 +1550,7 @@ public class MainActivity extends AppCompatActivity implements DialogInterface.O
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 BleService.isForeground = false;
-                stopService(gattServiceIntent);
+                if (gattServiceIntent != null)  stopService(gattServiceIntent);
                 sendToServerExit();
                 finish();
                 System.exit(0);

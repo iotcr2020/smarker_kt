@@ -276,17 +276,37 @@
                 android:layout_marginTop="@dimen/spacing_medium"
                 android:orientation="vertical">
 
-                <Button
-                    android:id="@+id/btnStartStop"
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/spacing_middle"
-                    android:layout_marginRight="@dimen/spacing_middle"
-                    android:background="@drawable/btn_rounded_primary"
-                    android:text="작업시작"
-                    android:textColor="#2cbbb6"
-                    android:textSize="18sp"
-                    android:textStyle="bold" />
+                    android:layout_marginTop="@dimen/spacing_medium"
+                    android:orientation="horizontal">
+
+                    <Button
+                        android:id="@+id/btnGoConnect"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:layout_marginLeft="@dimen/spacing_middle"
+                        android:layout_marginRight="@dimen/spacing_middle"
+                        android:background="@drawable/btn_rounded_primary"
+                        android:text="기기 다시 연결"
+                        android:textColor="#2cbbb6"
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
+
+                    <Button
+                        android:id="@+id/btnStartStop"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:layout_marginRight="@dimen/spacing_middle"
+                        android:background="@drawable/btn_rounded_primary"
+                        android:text="작업시작"
+                        android:textColor="#2cbbb6"
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
+                </LinearLayout>
 
                 <LinearLayout
                     android:id="@+id/warninglyo"
