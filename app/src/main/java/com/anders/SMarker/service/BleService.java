@@ -291,6 +291,7 @@ public class BleService extends Service {
                     myLog("ACTION_BOND_STATE_CHANGED:" +nameDevice);
                     break;
                 case BluetoothDevice.ACTION_ACL_DISCONNECTED:   //블루투스 기기 끊어짐
+                    sendToServerStripState(0,0);
                     myLog("ACTION_ACL_DISCONNECTED:" +nameDevice);
                     break;
                 case BluetoothAdapter.ACTION_DISCOVERY_STARTED: //블루투스 기기 검색 시작
