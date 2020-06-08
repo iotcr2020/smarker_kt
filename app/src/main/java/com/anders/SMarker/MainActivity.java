@@ -459,6 +459,9 @@ public class MainActivity extends AppCompatActivity implements DialogInterface.O
         @Override
         protected void weakHandleMessage(MainActivity ref, Message msg) {
             String smode = (String)msg.obj;
+            SoundManager soundManager = SoundManager.getInstance(thisContext);
+            SharedPreferences sharedPreferences = getSharedPreferences("setting", Activity.MODE_PRIVATE);
+            double stripVolume = (sharedPreferences.getInt("str_volume", 0) + 1) * 0.2;
 
             if( smode != null){
                 Log.i("최종 턱끈 착용===>", smode);
@@ -496,10 +499,10 @@ public class MainActivity extends AppCompatActivity implements DialogInterface.O
                 //턱끈 착용 감지 설정
                 if(AppVariables.Config_Strip_Mode == 0){//하나이상 접촉
                     if( (BleService.mainChkMode ==0) && (smodeConvert >0)) {
-                        SoundManager.getInstance(getApplicationContext()).play(R.raw.strap1);
+                        soundManager.play(R.raw.strap1, (float) stripVolume);
                         sendToServerStripState(3,0);
                     }else if( (BleService.mainChkMode > 0) && (smodeConvert==0)){
-                        SoundManager.getInstance(getApplicationContext()).play(R.raw.strap2);
+                        soundManager.play(R.raw.strap2, (float) stripVolume);
                         sendToServerStripState(0,0);
                     }
                     BleService.mainChkMode = smodeConvert;
@@ -507,10 +510,10 @@ public class MainActivity extends AppCompatActivity implements DialogInterface.O
                     if((smodeConvert == 0 && BleService.mainChkMode > 0) ||  (smodeConvert == 3 && BleService.mainChkMode == 0)){
                         if(smodeConvert==0){
                             sendToServerStripState(smodeConvert,0);
-                            SoundManager.getInstance(getApplicationContext()).play(R.raw.strap2);
+                            soundManager.play(R.raw.strap2, (float) stripVolume);
                         }else if(smodeConvert==3){
                             sendToServerStripState(smodeConvert,0);
-                            SoundManager.getInstance(getApplicationContext()).play(R.raw.strap1);
+                            soundManager.play(R.raw.strap1, (float) stripVolume);
                         }
                         BleService.mainChkMode = smodeConvert;
                     }

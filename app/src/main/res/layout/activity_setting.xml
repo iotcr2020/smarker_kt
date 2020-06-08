@@ -207,6 +207,59 @@
                     </LinearLayout>
                     <!-- 턱끈설정 - 턱끈 착용 감지 end -->
 
+                    <!-- 턱끈설정 -  턱끈 접촉음 크기 -->
+                    <View
+                        android:id="@+id/view21"
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginLeft="@dimen/spacing_large"
+                        android:layout_marginRight="@dimen/spacing_large"
+                        android:background="@color/grey_10" />
+
+                    <LinearLayout
+                        android:id="@+id/str_volume"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="?attr/selectableItemBackground"
+                        android:clickable="true"
+                        android:gravity="center_vertical"
+                        android:minHeight="@dimen/spacing_xxlarge"
+                        android:onClick="clickSetting"
+                        android:orientation="horizontal"
+                        android:paddingLeft="@dimen/spacing_medium"
+                        android:paddingRight="@dimen/spacing_medium">
+
+                        <ImageButton
+                            android:layout_width="@dimen/spacing_xmlarge"
+                            android:layout_height="@dimen/spacing_xmlarge"
+                            android:background="@android:color/transparent"
+                            android:tint="@color/yellow_800"
+                            app:srcCompat="@drawable/ic_vibration" />
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="턱끈 접촉음 크기"
+                            android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
+                            android:textColor="@color/grey_90" />
+
+                        <TextView
+                            android:id="@+id/str_volume_val"
+                            android:layout_width="111dp"
+                            android:layout_height="22dp"
+                            android:textAlignment="textEnd"
+                            android:textSize="16sp" />
+
+                        <ImageButton
+                            android:layout_width="@dimen/spacing_xmlarge"
+                            android:layout_height="@dimen/spacing_xmlarge"
+                            android:background="@android:color/transparent"
+                            android:tint="@color/grey_40"
+                            app:srcCompat="@drawable/ic_arrow_right" />
+                    </LinearLayout>
+                    <!-- 턱끈설정 - 턱끈 접촉음 크기 end -->
+
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="1dp"

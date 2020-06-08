@@ -376,7 +376,7 @@ public class BleService extends Service {
                 AppVariables.bStripConnect = true;
                 gatt.discoverServices();
                 broadcastStripUpdate(intentAction);
-                SoundManager.getInstance(getApplicationContext()).play(R.raw.connect);
+                SoundManager.getInstance(getApplicationContext()).play(R.raw.connect, 1f);
 
                 new Timer().schedule(new TimerTask() {
                     public void run() {
@@ -390,7 +390,7 @@ public class BleService extends Service {
                 intentAction = ACTION_STRIP_GATT_DISCONNECTED;
                 mConnectionStateStrip = STATE_DISCONNECTED;
                 broadcastStripUpdate(intentAction);
-                SoundManager.getInstance(getApplicationContext()).play(R.raw.disconnect);
+                SoundManager.getInstance(getApplicationContext()).play(R.raw.disconnect, 1f);
                 myLog("Disconnected from Strip GATT server.");
             }
         }
@@ -495,7 +495,7 @@ public class BleService extends Service {
                 AppVariables.bHelmetConnect = true;
                 gatt.discoverServices();
                 broadcastHelmetUpdate(intentAction);
-                SoundManager.getInstance(getApplicationContext()).play(R.raw.connect);
+                SoundManager.getInstance(getApplicationContext()).play(R.raw.connect, 1f);
                 myLog("Connected to Helmet GATT server.");
 
                 long curDate = System.currentTimeMillis();
@@ -510,7 +510,7 @@ public class BleService extends Service {
                 AppVariables.bHelmetConnect = false;
                 broadcastHelmetUpdate(intentAction);
                 myLog("Disconnected from Helmet GATT server.");
-                SoundManager.getInstance(getApplicationContext()).play(R.raw.disconnect);
+                SoundManager.getInstance(getApplicationContext()).play(R.raw.disconnect, 1f);
             }
         }
 
@@ -591,10 +591,10 @@ public class BleService extends Service {
             //턱끈 착용 감지 설정
             if(AppVariables.Config_Strip_Mode == 0){//하나이상 접촉
                 if( (mainChkMode ==0) && (smodeConvert >0)) {
-                    SoundManager.getInstance(BleService.this).play(R.raw.strap1);
+                    SoundManager.getInstance(BleService.this).play(R.raw.strap1, 1f);
                     sendToServerStripState(3,0);
                 }else if( (mainChkMode > 0) && (smodeConvert==0)){
-                    SoundManager.getInstance(BleService.this).play(R.raw.strap2);
+                    SoundManager.getInstance(BleService.this).play(R.raw.strap2, 1f);
                     sendToServerStripState(0,0);
                 }
                 mainChkMode = smodeConvert;
@@ -602,10 +602,10 @@ public class BleService extends Service {
                 if((smodeConvert == 0 && mainChkMode > 0) ||  (smodeConvert == 3 && mainChkMode == 0)){
                     if(smodeConvert==0){
                         sendToServerStripState(smodeConvert,0);
-                        SoundManager.getInstance(BleService.this).play(R.raw.strap2);
+                        SoundManager.getInstance(BleService.this).play(R.raw.strap2, 1f);
                     }else if(smodeConvert==3){
                         sendToServerStripState(smodeConvert,0);
-                        SoundManager.getInstance(BleService.this).play(R.raw.strap1);
+                        SoundManager.getInstance(BleService.this).play(R.raw.strap1, 1f);
                     }
                     mainChkMode = smodeConvert;
                 }

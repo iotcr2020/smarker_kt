@@ -24,13 +24,14 @@ import com.anders.SMarker.utils.Tools;
 
 public class SettingActivity extends AppCompatActivity {
 
-    TextView str_time_val,str_battery_val,str_sensing_val, str_acl_val;;
+    TextView str_time_val,str_battery_val,str_sensing_val, str_volume_val, str_acl_val;;
     TextView helmet_time_val,helmet_battery_val,helmet_acl_val;
     TextView etc_time_val,etc_receiver_val;
 
     int str_time_set, str_battery_set, str_sensing_set, str_acl_set = 0;
     int helmet_time_set,helmet_battery_set = 0;
     int helmet_acl_set = 4;
+    int str_volume_set = 2;
     int etc_time_set, etc_receiver_set = 0;
 
     SharedPreferences auto;
@@ -46,6 +47,7 @@ public class SettingActivity extends AppCompatActivity {
         str_time_val = (TextView)findViewById(R.id.str_time_val);
         str_battery_val = (TextView)findViewById(R.id.str_battery_val);
         str_sensing_val = (TextView)findViewById(R.id.str_sensing_val);
+        str_volume_val = (TextView)findViewById(R.id.str_volume_val);
         str_acl_val = (TextView)findViewById(R.id.str_acl_val);
         helmet_time_val = (TextView)findViewById(R.id.helmet_id_val);
         helmet_battery_val = (TextView)findViewById(R.id.strip_id_val);
@@ -116,11 +118,13 @@ public class SettingActivity extends AppCompatActivity {
         etc_receiver_set = auto.getInt("etc_receiver",etc_receiver_set);
         helmet_acl_set = auto.getInt("helmet_acl",helmet_acl_set);
         str_acl_set = auto.getInt("str_acl",str_acl_set);
+        str_volume_set = auto.getInt("str_volume",str_volume_set);
 
         if(auto != null){
             str_time_val.setText(getResources().getStringArray(R.array.setting_str_time)[str_time_set]);
             str_battery_val.setText(getResources().getStringArray(R.array.setting_str_battery)[str_battery_set]);
             str_sensing_val.setText(getResources().getStringArray(R.array.setting_str_sensing)[str_sensing_set]);
+            str_volume_val.setText(getResources().getStringArray(R.array.setting_volume)[str_volume_set]);
             str_acl_val.setText(getResources().getStringArray(R.array.setting_helmet_acl)[str_acl_set]);
 
             helmet_time_val.setText(getResources().getStringArray(R.array.setting_helmet_time)[helmet_time_set]);
@@ -144,6 +148,9 @@ public class SettingActivity extends AppCompatActivity {
                 break;
             case R.id.str_sensing://턱끈-턱끈착용감지
                 showStrSensingChoiceDialog();
+                break;
+            case R.id.str_volume://턱끈-민감도 설정
+                showStrVolumeChoiceDialog();
                 break;
             case R.id.str_acl://턱끈-민감도 설정
                 showStrAclChoiceDialog();
@@ -330,6 +337,36 @@ public class SettingActivity extends AppCompatActivity {
                 //최종 커밋
                 editor.commit();
                 sendConfigToHelmet();
+                dialogInterface.dismiss();
+            }
+        });
+        builder.show();
+    }
+
+    //턱끈 접촉음 크기 설정
+    private String str_volume_choice_selected;
+    private void showStrVolumeChoiceDialog() {
+        str_volume_choice_selected = getResources().getStringArray(R.array.setting_volume)[0];
+        final AlertDialog.Builder builder = new AlertDialog.Builder(this,R.style.SettingThemeDialog);
+
+        TextView title = new TextView(this);
+        // You Can Customise your Title here
+        title.setText("턱끈 접촉음 크기");
+        title.setBackgroundColor(getResources().getColor(R.color.teal_400));
+        title.setPadding(15, 15, 15, 15);
+        title.setGravity(Gravity.CENTER);
+        title.setTextColor(Color.WHITE);
+        title.setTextSize(20);
+
+        builder.setCustomTitle(title);
+        builder.setSingleChoiceItems(R.array.setting_volume, str_volume_set, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                str_volume_choice_selected = String.valueOf(getResources().getStringArray(R.array.setting_volume)[i]);
+                str_volume_val.setText(str_volume_choice_selected);
+                editor.putInt("str_volume",i); // key, value를 이용하여 저장하는 형태
+                //최종 커밋
+                editor.commit();
                 dialogInterface.dismiss();
             }
         });

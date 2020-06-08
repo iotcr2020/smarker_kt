@@ -34,13 +34,13 @@ public class SoundManager {
      * 리소스 재생
      * @param rawResource
      */
-    public void play(final int rawResource) {
+    public void play(final int rawResource, final float volume) {
 
         soundPool.load(context, rawResource, 1);
         soundPool.setOnLoadCompleteListener(new SoundPool.OnLoadCompleteListener() {
             @Override
             public void onLoadComplete(SoundPool soundPool, int sampleId, int status) {
-                soundPool.play(sampleId,  1f, 1f, 1, 0, 1);
+                soundPool.play(sampleId,  volume, volume, 1, 0, 1);
             }
         });
     }

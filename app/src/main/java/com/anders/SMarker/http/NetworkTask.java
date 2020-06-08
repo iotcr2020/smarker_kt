@@ -5,8 +5,8 @@ import android.os.AsyncTask;
 import android.util.Log;
 
 public class NetworkTask extends AsyncTask<Void, Void, String> {
-    //public static final String API_SERVER_ADRESS ="http://211.233.58.32:80";
     public static final String API_SERVER_ADRESS ="https://smarker.co.kr/kt";
+    //public static final String API_SERVER_ADRESS ="https://ktsmarkerweb.kt.co.kr";
     public static final String API_CHECK_PHONE_NUMBER = API_SERVER_ADRESS + "/api/check_phone_number.php"  ;
     public static final String API_CHECK_AGREE = API_SERVER_ADRESS + "/api/select_use_agree.php";
     public static final String API_UPDATE_AGREE = API_SERVER_ADRESS + "/api/update_use_agree.php";
@@ -19,8 +19,8 @@ public class NetworkTask extends AsyncTask<Void, Void, String> {
     public static final String API_MESSAGE_SEND_LIST = API_SERVER_ADRESS+"/api/message_send.php";
     public static final String API_MESSAGE_READ_CHK = API_SERVER_ADRESS+"/api/message_read_chk.php";
     public static final String API_MESSAGE_RECEIVE_INSERT = API_SERVER_ADRESS+"/api/db_message_receive.php";
-    public static final String API_IMAGE_UPLOAD_SERVER= "https://smarker.co.kr/kt/user_images/UploadToServer.php";
-    public static final String API_IMAGE_DELETE_SERVER = "https://smarker.co.kr/kt/user_images/UploadToServerRemove.php";
+    public static final String API_IMAGE_UPLOAD_SERVER= "/user_images/UploadToServer.php";
+    public static final String API_IMAGE_DELETE_SERVER = "/user_images/UploadToServerRemove.php";
     public static final String API_UPDATE_USER_STRIP_MAC =API_SERVER_ADRESS + "/api/UpdateUserStripMac.php";
     public static final String API_UPDATE_USER_Helmet_MAC =API_SERVER_ADRESS + "/api/UpdateUserHelmetMac.php";
     public static final String API_UPDATE_START_WORK = API_SERVER_ADRESS + "/api/update_Start_Work.php";
