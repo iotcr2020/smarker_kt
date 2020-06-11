@@ -151,7 +151,7 @@ public class MainActivity extends AppCompatActivity implements DialogInterface.O
 
     public static BottomNavigationView navigation;
 
-    private static final long MIN_CLICK_INTERVAL = 15000;
+    private static final long MIN_CLICK_INTERVAL = 1500;
     private long mLastClickTime;
 
     private static final long STRIP_CHECK_INTERVAL = 2000;
