@@ -27,6 +27,7 @@ public class NetworkTask extends AsyncTask<Void, Void, String> {
     public static final String API_UPDATE_STOP_WORK = API_SERVER_ADRESS + "/api/update_Stop_Work.php";
     public static final String API_UPDATE_DUST_VALUE = API_SERVER_ADRESS + "/api/Update_Dust_Value.php";
     public static final String API_MAIN_ALERT_RECEIVE = API_SERVER_ADRESS + "/api/message_receive_main.php";
+    public static final String API_CHECK_STRIP_STATE = API_SERVER_ADRESS + "/api/stripStateCheck.php";
     public static final String API_INSERT_STRIP_STATE = API_SERVER_ADRESS + "/api/InsertStripState.php";
     public static final String API_ADMIN_ACTION_SEND = API_SERVER_ADRESS + "/api/Admin_Action_Send.php";
     public static final String API_LOG_OFF = API_SERVER_ADRESS + "/api/LogOff.php";

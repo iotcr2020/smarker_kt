@@ -670,19 +670,17 @@ public class BleService extends Service {
             {
                 if(readByte[0]== (byte)0x00){
                     myLog("STRIP==> 턱끈 긴급해제 들어옴 ");
-                    if(AlertDialog.IsShow()){
+                    if(AlertDialog.IsShow()) {
                         AlertDialog.Close();
                         sendMessageUpdateUI(AppVariables.EXTRA_SERVICE_EMERGENCY_OFF_STRIP, "0x0000");
                     }
-                }else{
-                    if(readByte[0]== (byte)0xA1){
+                } else {
+                    if(readByte[0]== (byte)0xA1) {
                         myLog("shet==> 턱끈 긴급상황 발생");
                         AlertDialogShow("Y","장비");
                     }
                 }
-            }//턱끈착용상태
-            else if(characteristic.getUuid().equals(StripProfile.STRIP_APPLY_CHARACTERISTIC))
-            {
+            } else if(characteristic.getUuid().equals(StripProfile.STRIP_APPLY_CHARACTERISTIC)) { //턱끈착용상태
                 String smode = "0";
                 chkMode = 0;
                 if(readByte[0] == (byte)0x01){
@@ -698,8 +696,7 @@ public class BleService extends Service {
                 AppVariables.sStripApplyMode = smode;
                 myLog("STRIP==>턱끈 착용상태 들어옴 " + smode);
                 sendMessageUpdateUI(AppVariables.EXTRA_SERVICE_APPLY_INFO_STRIP, smode);
-            }else if(characteristic.getUuid().equals(StripProfile.STRIP_BATTERY_CHARACTERISTIC))
-            {
+            } else if(characteristic.getUuid().equals(StripProfile.STRIP_BATTERY_CHARACTERISTIC)) {
                 int battery_data = readByte[0]  ; //s & 0xff;
                 AppVariables.iStripBatteryAmmount = Integer.parseInt(String.format("%d", battery_data));
                 //if(AppVariables.iStripBatteryAmmount > 100) AppVariables.iStripBatteryAmmount -= 128;
@@ -707,9 +704,7 @@ public class BleService extends Service {
                 sendMessageUpdateUI(AppVariables.EXTRA_SERVICE_BATTERY_INFO_STRIP,String.format("%d", battery_data));
             }
             bExeThread=true;
-        }
-        catch(Exception e)
-        {
+        } catch(Exception e) {
             bExeThread=true;
             myLog("STRIP UI Exception==>"+e.toString());
             e.printStackTrace();

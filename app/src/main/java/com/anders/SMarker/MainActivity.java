@@ -90,6 +90,8 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.UUID;
 
 public class MainActivity extends AppCompatActivity implements DialogInterface.OnDismissListener{
@@ -151,6 +153,11 @@ public class MainActivity extends AppCompatActivity implements DialogInterface.O
 
     private static final long MIN_CLICK_INTERVAL = 15000;
     private long mLastClickTime;
+
+    private static final long STRIP_CHECK_INTERVAL = 2000;
+    private long mLastStripTime;
+
+    private String stripRequestFlag = "N";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -458,67 +465,106 @@ public class MainActivity extends AppCompatActivity implements DialogInterface.O
     private WeakHandler<MainActivity> serviceMessageHandler = new WeakHandler<MainActivity>(this) {
         @Override
         protected void weakHandleMessage(MainActivity ref, Message msg) {
-            String smode = (String)msg.obj;
-            SoundManager soundManager = SoundManager.getInstance(thisContext);
+            final String smode = (String)msg.obj;
+            final SoundManager soundManager = SoundManager.getInstance(thisContext);
             SharedPreferences sharedPreferences = getSharedPreferences("setting", Activity.MODE_PRIVATE);
-            double stripVolume = (sharedPreferences.getInt("str_volume", 0) + 1) * 0.2;
+            final double stripVolume = (sharedPreferences.getInt("str_volume", 0) + 1) * 0.2;
+
+            String stripTimeCheckFlag = "N";
 
             if( smode != null){
-                Log.i("최종 턱끈 착용===>", smode);
-
-                if (AppVariables.Config_Strip_Mode == 0) { // 하나이상 접촉 (설정)
-                   if (smode.equals("1") || smode.equals("2") || smode.equals("3")) {
-                        imgStripTop.setImageDrawable(getResources().getDrawable(R.drawable.circle_top));
-                        imgStripBottom.setImageDrawable(getResources().getDrawable(R.drawable.circle_bottom));
-                    } else {
-                        imgStripTop.setImageDrawable(getResources().getDrawable( R.drawable.circle_top_off));
-                        imgStripBottom.setImageDrawable(getResources().getDrawable(R.drawable.circle_bottom_off));
-                        imgStripBottom.setImageResource(R.drawable.circle_bottom_off);
-                    }
+                if (smode.equals("1") || smode.equals("2") || smode.equals("3")) {
+                    stripRequestFlag = "Y";
+                    stripTimeCheckFlag = "Y";
                 } else {
-                    if(smode.equals("1")) {
-                        imgStripTop.setImageDrawable(getResources().getDrawable(R.drawable.circle_top));
-                        imgStripBottom.setImageDrawable(getResources().getDrawable(R.drawable.circle_bottom_off));
-                    }else if(smode.equals("2")){
-                        imgStripTop.setImageDrawable(getResources().getDrawable(R.drawable.circle_top_off));
-                        imgStripBottom.setImageDrawable(getResources().getDrawable(R.drawable.circle_bottom));
-                    }else if(smode.equals("3")){
-                        imgStripTop.setImageDrawable(getResources().getDrawable(R.drawable.circle_top));
-                        imgStripBottom.setImageDrawable(getResources().getDrawable(R.drawable.circle_bottom));
-                    }else{
-                        imgStripTop.setImageDrawable(getResources().getDrawable( R.drawable.circle_top_off));
-                        imgStripBottom.setImageDrawable(getResources().getDrawable(R.drawable.circle_bottom_off));
-                        imgStripBottom.setImageResource(R.drawable.circle_bottom_off);
-                    }
+                    stripRequestFlag = "N";
+                    stripTimeCheckFlag = "N";
                 }
             }
 
-            if (!TextUtils.isEmpty(smode)) {
-                int smodeConvert = Integer.parseInt(smode);
+            final String stripTimeCheckFlagFinal = stripTimeCheckFlag;
 
-                //턱끈 착용 감지 설정
-                if(AppVariables.Config_Strip_Mode == 0){//하나이상 접촉
-                    if( (BleService.mainChkMode ==0) && (smodeConvert >0)) {
-                        soundManager.play(R.raw.strap1, (float) stripVolume);
-                        sendToServerStripState(3,0);
-                    }else if( (BleService.mainChkMode > 0) && (smodeConvert==0)){
-                        soundManager.play(R.raw.strap2, (float) stripVolume);
-                        sendToServerStripState(0,0);
-                    }
-                    BleService.mainChkMode = smodeConvert;
-                }else{//예외 시 모든 센서 접촉으로 기본 설정
-                    if((smodeConvert == 0 && BleService.mainChkMode > 0) ||  (smodeConvert == 3 && BleService.mainChkMode == 0)){
-                        if(smodeConvert==0){
-                            sendToServerStripState(smodeConvert,0);
-                            soundManager.play(R.raw.strap2, (float) stripVolume);
-                        }else if(smodeConvert==3){
-                            sendToServerStripState(smodeConvert,0);
-                            soundManager.play(R.raw.strap1, (float) stripVolume);
+            Timer timer = new Timer();
+            TimerTask timerTask = new TimerTask() {
+                @Override
+                public void run() {
+                    runOnUiThread(new Runnable(){
+                        @Override
+                        public void run() {
+                            if (stripRequestFlag.equals(stripTimeCheckFlagFinal)) {
+                                if( smode != null){
+                                    if (AppVariables.Config_Strip_Mode == 0) { // 하나이상 접촉 (설정)
+                                        if (smode.equals("1") || smode.equals("2") || smode.equals("3")) {
+                                            imgStripTop.setImageDrawable(getResources().getDrawable(R.drawable.circle_top));
+                                            imgStripBottom.setImageDrawable(getResources().getDrawable(R.drawable.circle_bottom));
+                                        } else {
+                                            imgStripTop.setImageDrawable(getResources().getDrawable( R.drawable.circle_top_off));
+                                            imgStripBottom.setImageDrawable(getResources().getDrawable(R.drawable.circle_bottom_off));
+                                            imgStripBottom.setImageResource(R.drawable.circle_bottom_off);
+                                        }
+                                    } else {
+                                        if(smode.equals("1")) {
+                                            imgStripTop.setImageDrawable(getResources().getDrawable(R.drawable.circle_top));
+                                            imgStripBottom.setImageDrawable(getResources().getDrawable(R.drawable.circle_bottom_off));
+                                        }else if(smode.equals("2")){
+                                            imgStripTop.setImageDrawable(getResources().getDrawable(R.drawable.circle_top_off));
+                                            imgStripBottom.setImageDrawable(getResources().getDrawable(R.drawable.circle_bottom));
+                                        }else if(smode.equals("3")){
+                                            imgStripTop.setImageDrawable(getResources().getDrawable(R.drawable.circle_top));
+                                            imgStripBottom.setImageDrawable(getResources().getDrawable(R.drawable.circle_bottom));
+                                        }else{
+                                            imgStripTop.setImageDrawable(getResources().getDrawable( R.drawable.circle_top_off));
+                                            imgStripBottom.setImageDrawable(getResources().getDrawable(R.drawable.circle_bottom_off));
+                                            imgStripBottom.setImageResource(R.drawable.circle_bottom_off);
+                                        }
+                                    }
+                                }
+
+                                if (!TextUtils.isEmpty(smode)) {
+                                    int smodeConvert = Integer.parseInt(smode);
+
+                                    //턱끈 착용 감지 설정
+                                    if(AppVariables.Config_Strip_Mode == 0){//하나이상 접촉
+                                        if( (BleService.mainChkMode ==0) && (smodeConvert >0)) {
+                                            soundManager.play(R.raw.strap1, (float) stripVolume);
+                                            sendToServerStripState(3,0);
+                                        }else if( (BleService.mainChkMode > 0) && (smodeConvert==0)){
+                                            soundManager.play(R.raw.strap2, (float) stripVolume);
+                                            sendToServerStripState(0,0);
+                                        }
+                                        BleService.mainChkMode = smodeConvert;
+                                    }else{//예외 시 모든 센서 접촉으로 기본 설정
+                                        if((smodeConvert == 0 && BleService.mainChkMode > 0) ||  (smodeConvert == 3 && BleService.mainChkMode == 0)){
+                                            if(smodeConvert==0){
+                                                sendToServerStripState(smodeConvert,0);
+                                                soundManager.play(R.raw.strap2, (float) stripVolume);
+                                            }else if(smodeConvert==3){
+                                                sendToServerStripState(smodeConvert,0);
+                                                soundManager.play(R.raw.strap1, (float) stripVolume);
+                                            }
+                                            BleService.mainChkMode = smodeConvert;
+                                        }
+                                    }
+                                }
+                            }
                         }
-                        BleService.mainChkMode = smodeConvert;
-                    }
+                    });
                 }
-            }
+            };
+            timer. schedule(timerTask, STRIP_CHECK_INTERVAL);
+
+            TimerTask timerTask2 = new TimerTask() {
+                @Override
+                public void run() {
+                    runOnUiThread(new Runnable(){
+                        @Override
+                        public void run() {
+
+                        }
+                    });
+                }
+            };
+            timer. schedule(timerTask2, STRIP_CHECK_INTERVAL);
         }
     };
 
@@ -1602,8 +1648,6 @@ public class MainActivity extends AppCompatActivity implements DialogInterface.O
             }else{
                 Toast.makeText(this,"턱끈 정보를 서버로 전송할 수 없습니다.", Toast.LENGTH_LONG).show();
             }
-
-
         } catch (Exception e) {
             e.printStackTrace();
             Toast.makeText(this,"턱끈 정보를 서버로 전송할 수 없습니다.", Toast.LENGTH_LONG).show();
