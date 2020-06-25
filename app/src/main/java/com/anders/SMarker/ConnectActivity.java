@@ -281,13 +281,13 @@ public class ConnectActivity extends AppCompatActivity {
     private void scanLeDevice(final boolean enable) {
         if (enable) {
             // Stops scanning after a pre-defined scan period.
-            mHandler.postDelayed(new Runnable() {
+            /*mHandler.postDelayed(new Runnable() {
                 @Override
                 public void run() {
                     mScanning = false;
                     stopScan();
                 }
-            }, SCAN_PERIOD);
+            }, SCAN_PERIOD);*/
 
             mScanning = true;
             startScan();
