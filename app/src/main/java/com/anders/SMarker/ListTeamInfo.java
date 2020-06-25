@@ -317,7 +317,7 @@ public class ListTeamInfo extends AppCompatActivity {
         ContentValues addData = new ContentValues();
         addData.put("phoneNB", AppVariables.User_Phone_Number);
         addData.put("serverURL", NetworkTask.API_SERVER_ADRESS);
-        NetworkTask networkTask = new NetworkTask(NetworkTask.API_TEAM_LIST2, addData);
+        NetworkTask networkTask = new NetworkTask(NetworkTask.API_TEAM_LIST, addData);
 
         try {
             String result =  networkTask.execute().get();
@@ -421,7 +421,7 @@ public class ListTeamInfo extends AppCompatActivity {
         if (item.getItemId() == android.R.id.home) {
             finish();
         }else if (item.getItemId()== R.id.btnEmergency) {
-            AlarmDlg.showAlarmDialog(this, ""); //권한 허용 시 비상 알림 띄우기
+            AlarmDlg.showAlarmDialog(this, "긴급"); //권한 허용 시 비상 알림 띄우기
         }else if(item.getItemId()==R.id.btnRefresh){
             mArrayList = new ArrayList<>();
             teamListView();

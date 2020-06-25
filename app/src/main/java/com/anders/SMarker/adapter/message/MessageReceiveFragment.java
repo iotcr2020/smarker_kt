@@ -67,93 +67,93 @@ public class MessageReceiveFragment extends Fragment {
         messageRecyclerView.setLayoutManager(Im);
 
         int non_read_cnt=0;
-        try {
-            JSONArray jsonArray = new JSONArray(receiveString);
-            int arraycnt = jsonArray.length();
 
-            message_cnt.setText(Integer.toString(arraycnt));
+        if (receiveString != null && !"".equals(receiveString)) {
+            try {
+                JSONArray jsonArray = new JSONArray(receiveString);
+                int arraycnt = jsonArray.length();
 
-            for(int i=0;i<arraycnt;i++){
+                message_cnt.setText(Integer.toString(arraycnt));
 
-                JSONObject item = jsonArray.getJSONObject(i);
+                for (int i = 0; i < arraycnt; i++) {
 
-                String user_nm = item.getString("user_nm");
-               // String ut_nm = item.getString("ut_nm");
-                String gubn = item.getString("gubn");
-                String content = item.getString("content");
-                String reg_dt = item.getString("reg_dt");
-                String co_idx = item.getString("co_idx");
-                String read_chk = item.getString("read_chk");
-                String action_content = item.getString("action_content");
-                if(read_chk.equals("N")){
-                    non_read_cnt++;
+                    JSONObject item = jsonArray.getJSONObject(i);
+
+                    String user_nm = item.getString("user_nm");
+                    // String ut_nm = item.getString("ut_nm");
+                    String gubn = item.getString("gubn");
+                    String content = item.getString("content");
+                    String reg_dt = item.getString("reg_dt");
+                    String co_idx = item.getString("co_idx");
+                    String read_chk = item.getString("read_chk");
+                    String action_content = item.getString("action_content");
+                    if (read_chk.equals("N")) {
+                        non_read_cnt++;
+                    }
+                    MessageList messageData = new MessageList();
+
+                    messageData.setSend_receive_chk("R");
+                    messageData.setMessage_co_idx(co_idx);
+                    messageData.setMessage_user_nm(user_nm);
+                    //  messageData.setMessage_ut_nm(ut_nm);
+                    messageData.setMessage_gubn(gubn);
+                    messageData.setMessage_content(content);
+                    messageData.setReg_dt(reg_dt);
+                    messageData.setRead_chk(read_chk);
+                    messageData.setAction_content(action_content);
+
+
+                    messageLists.add(messageData);
+
+                    messageListsAll.add(messageData);
+
+
                 }
-                MessageList messageData = new MessageList();
 
-                messageData.setSend_receive_chk("R");
-                messageData.setMessage_co_idx(co_idx);
-                messageData.setMessage_user_nm(user_nm);
-                //  messageData.setMessage_ut_nm(ut_nm);
-                messageData.setMessage_gubn(gubn);
-                messageData.setMessage_content(content);
-                messageData.setReg_dt(reg_dt);
-                messageData.setRead_chk(read_chk);
-                messageData.setAction_content(action_content);
-
-
-                messageLists.add(messageData);
-
-                messageListsAll.add(messageData);
-
-
-
-
-            }
-
-            non_message_cnt.setText(Integer.toString(non_read_cnt));
-            non_read_chk.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    if(adapterMessageList !=null) {
-                        for (Iterator<MessageList> it = messageLists.iterator(); it.hasNext(); ) {
-                            MessageList value = it.next();
-                            if (value.getRead_chk().equals("Y")) {
-                                it.remove();
+                non_message_cnt.setText(Integer.toString(non_read_cnt));
+                non_read_chk.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        if (adapterMessageList != null) {
+                            for (Iterator<MessageList> it = messageLists.iterator(); it.hasNext(); ) {
+                                MessageList value = it.next();
+                                if (value.getRead_chk().equals("Y")) {
+                                    it.remove();
+                                }
                             }
                         }
+
+
+                        if (non_read_chk.isChecked()) {
+
+                            adapterMessageList = new AdapterMessageList(getActivity(), messageLists);
+                            adapterMessageList.notifyDataSetChanged();
+                            messageRecyclerView.setAdapter(adapterMessageList);
+                        } else {
+                            adapterMessageList = new AdapterMessageList(getActivity(), messageListsAll);
+                            adapterMessageList.notifyDataSetChanged();
+                            messageRecyclerView.setAdapter(adapterMessageList);
+
+
+                        }
                     }
+                });
 
+                if (!non_read_chk.isChecked()) {
+                    if (adapterMessageList != null) {
 
-                    if(non_read_chk.isChecked()){
-
-                        adapterMessageList = new AdapterMessageList(getActivity(), messageLists);
-                        adapterMessageList.notifyDataSetChanged();
-                        messageRecyclerView.setAdapter(adapterMessageList);
-                    }else{
-                        adapterMessageList = new AdapterMessageList(getActivity(), messageListsAll);
-                        adapterMessageList.notifyDataSetChanged();
-                        messageRecyclerView.setAdapter(adapterMessageList);
-
-
+                        // messageLists = adapterMessageList.getItems();
                     }
+                    adapterMessageList = new AdapterMessageList(getActivity(), messageLists);
+                    adapterMessageList.notifyDataSetChanged();
+                    messageRecyclerView.setAdapter(adapterMessageList);
                 }
-            });
 
-            if(!non_read_chk.isChecked()){
-                if(adapterMessageList !=null){
 
-                   // messageLists = adapterMessageList.getItems();
-                }
-                adapterMessageList = new AdapterMessageList(getActivity(), messageLists);
-                adapterMessageList.notifyDataSetChanged();
-                messageRecyclerView.setAdapter(adapterMessageList);
+            } catch (JSONException e) {
+
+                //Log.d(TAG, "showResult : ", e);
             }
-
-
-
-        } catch (JSONException e) {
-
-            //Log.d(TAG, "showResult : ", e);
         }
 
         //TextView textView = (TextView) rootView.findViewById(R.id.section_label);

@@ -35,7 +35,7 @@ public class RestartService extends BroadcastReceiver {
         String gubn = arg1.getExtras().getString("gubn");
         String sound = arg1.getExtras().getString("sound");
 
-        if(gubn.equals(context.getResources().getString(R.string.dialogAlaram3)) || gubn.equals("장비")) {
+        if(gubn.equals(context.getResources().getString(R.string.dialogAlaram3)) || gubn.equals("장비") || gubn.equals("낙하")) {
 
             Intent popupIntent = new Intent(context, CustomDialogTeam.class);
             popupIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);

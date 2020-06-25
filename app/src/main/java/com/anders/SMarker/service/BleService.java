@@ -240,7 +240,7 @@ public class BleService extends Service {
                 {
                     try {
                         //anders
-                        Thread.sleep(1000 * 50 ); // 1 minute
+                        Thread.sleep(1000 * 2 );
                         if( bExeThread) {
                             if (mConnectionStateStrip == STATE_DISCONNECTED || mConnectionStateHelmet == STATE_DISCONNECTED) {
                                 if (mBluetoothAdapter != null) {
