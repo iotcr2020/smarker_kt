@@ -137,6 +137,15 @@
         <!-- receiver -->
         <receiver android:name=".fcm.RestartService"/>
 
+        <receiver
+            android:name=".service.MyReceiver"
+            android:enabled="true"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.ACTION_SHUTDOWN" />
+            </intent-filter>
+        </receiver>
+
         <!-- provider -->
         <provider
             android:name="android.support.v4.content.FileProvider"
