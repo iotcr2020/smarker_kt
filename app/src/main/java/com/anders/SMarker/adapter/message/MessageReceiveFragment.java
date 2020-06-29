@@ -172,7 +172,7 @@ public class MessageReceiveFragment extends Fragment {
 
         try {
             String result =  networkTask.execute().get();
-            if(!result.isEmpty()){
+            if(result != null && !result.isEmpty()){
                 receiveString = result;
 
             }else{

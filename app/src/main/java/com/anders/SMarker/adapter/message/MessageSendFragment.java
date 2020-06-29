@@ -108,7 +108,7 @@ public class MessageSendFragment extends Fragment {
 
         try {
             String result =  networkTask.execute().get();
-            if(!result.isEmpty()){
+            if(result != null && !result.isEmpty()){
                 sendString = result;
                 Log.d("send result", result);
 

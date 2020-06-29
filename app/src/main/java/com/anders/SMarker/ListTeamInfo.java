@@ -230,8 +230,6 @@ public class ListTeamInfo extends AppCompatActivity {
             ((SimpleItemAnimator) animator).setSupportsChangeAnimations(false);
         }
 
-        Log.i("json --------------->>", mJsonString.toString());
-
         try {
             JSONArray jsonArray = new JSONArray(mJsonString);
 
@@ -321,7 +319,7 @@ public class ListTeamInfo extends AppCompatActivity {
 
         try {
             String result =  networkTask.execute().get();
-            if(!result.isEmpty()){
+            if(result != null && !result.isEmpty()){
                 mJsonString = result;
             }else{
 
