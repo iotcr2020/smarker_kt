@@ -953,10 +953,6 @@ public class MainActivity extends AppCompatActivity implements DialogInterface.O
         {
 
             try {
-                //폴더 사진 지우기
-                NetworkTask networkTask = new NetworkTask(NetworkTask.API_IMAGE_DELETE_SERVER,null);
-                networkTask.execute();
-
                 FileInputStream fileInputStream = new FileInputStream(sourceFile);
                 URL url = new URL(urlString);
                 // Open a HTTP  connection to  the URL

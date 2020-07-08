@@ -5,6 +5,7 @@ import android.graphics.drawable.ShapeDrawable;
 import android.graphics.drawable.shapes.OvalShape;
 import android.media.ExifInterface;
 import android.support.v7.widget.RecyclerView;
+import android.util.Base64;
 import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -99,7 +100,7 @@ public class AdapterTeamList extends RecyclerView.Adapter<AdapterTeamList.ViewHo
 
            // Bitmap bitmap = new LoadImagefromUrl(image).execute().get();
             Glide.clear(holder.itemView);
-            Glide.with(ctx).load(image)
+            Glide.with(ctx).load(Base64.decode(image, Base64.DEFAULT))
                     .placeholder(R.drawable.ic_noimage)
                     .error(R.drawable.ic_noimage)
                     .signature(new StringSignature((UUID.randomUUID().toString())))

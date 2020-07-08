@@ -571,8 +571,8 @@ public class UserInfoActivity extends AppCompatActivity {
 
     //사진 서버 업로드
     private int imageUpload(final String fileName) {
-        String urlString = NetworkTask.API_IMAGE_UPLOAD_SERVER ;
-         HttpURLConnection conn = null;
+        String urlString = NetworkTask.API_IMAGE_UPLOAD_SERVER + "/" + AppVariables.User_Idx;
+        HttpURLConnection conn = null;
         DataOutputStream dos = null;
         String lineEnd = "\r\n";
         String twoHyphens = "--";
@@ -581,7 +581,7 @@ public class UserInfoActivity extends AppCompatActivity {
         byte[] buffer;
         int maxBufferSize = 1 * 1024 * 1024;
         File sourceFile = new File(fileName);
-       if (!sourceFile.isFile()) {
+        if (!sourceFile.isFile()) {
 
             runOnUiThread(new Runnable() {
                 public void run() {
@@ -594,16 +594,9 @@ public class UserInfoActivity extends AppCompatActivity {
         {
 
             try {
-                //폴더 사진 지우기
-                NetworkTask networkTask = new NetworkTask(NetworkTask.API_IMAGE_DELETE_SERVER,null);
-                networkTask.execute();
-
                 FileInputStream fileInputStream = new FileInputStream(sourceFile);
                 URL url = new URL(urlString);
-              // Open a HTTP  connection to  the URL
-
                 conn = (HttpURLConnection) url.openConnection();
-
                 conn.setDoInput(true); // Allow Inputs
 
                 conn.setDoOutput(true); // Allow Outputs
@@ -629,11 +622,11 @@ public class UserInfoActivity extends AppCompatActivity {
 
                 bytesRead = fileInputStream.read(buffer, 0, bufferSize);
                 while (bytesRead > 0) {
-                   dos.write(buffer, 0, bufferSize);
+                    dos.write(buffer, 0, bufferSize);
                     bytesAvailable = fileInputStream.available();
                     bufferSize = Math.min(bytesAvailable, maxBufferSize);
                     bytesRead = fileInputStream.read(buffer, 0, bufferSize);
-               }
+                }
                 dos.writeBytes(lineEnd);
                 dos.writeBytes(twoHyphens + boundary + twoHyphens + lineEnd);
 
@@ -642,44 +635,33 @@ public class UserInfoActivity extends AppCompatActivity {
                 Log.i("uploadFile", "HTTP Response is : "  + serverResponseMessage + ": " + serverResponseCode);
                 if(serverResponseCode == 200){
                     runOnUiThread(new Runnable() {
-
                         public void run() {
-                       Toast.makeText(UserInfoActivity.this, "저장되었습니다.",
+                            Toast.makeText(UserInfoActivity.this, "저장되었습니다.",
                                     Toast.LENGTH_SHORT).show();
                         }
-
                     });
                 }
-               //close the streams //
+
                 fileInputStream.close();
                 dos.flush();
                 dos.close();
             } catch (MalformedURLException ex) {
-               ex.printStackTrace();
-               runOnUiThread(new Runnable() {
-
+                ex.printStackTrace();
+                runOnUiThread(new Runnable() {
                     public void run() {
-                        Toast.makeText(UserInfoActivity.this, "연결 실패되었습니다.",
-
-                                Toast.LENGTH_SHORT).show();
-
+                        Toast.makeText(UserInfoActivity.this, "연결 실패되었습니다.", Toast.LENGTH_SHORT).show();
                     }
-
                 });
 
             } catch (Exception e) {
                 e.printStackTrace();
-
-
-
                 runOnUiThread(new Runnable() {
                     public void run() {
-                      //Toast.makeText(UserInfoActivity.this, "저장 오류가 발생했습니다. ", Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(UserInfoActivity.this, "저장 오류가 발생했습니다. ", Toast.LENGTH_SHORT).show();
                     }
-
                 });
             }
-           return serverResponseCode;
+            return serverResponseCode;
         } // End else block
     }
 
