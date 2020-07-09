@@ -1,6 +1,7 @@
 package com.anders.SMarker;
 
 import android.app.Activity;
+import android.content.ContentValues;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -15,15 +16,18 @@ import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.CompoundButton;
+import android.widget.Switch;
 import android.widget.TextView;
 
+import com.anders.SMarker.http.NetworkTask;
 import com.anders.SMarker.service.BleService;
 import com.anders.SMarker.utils.AlarmDlg;
 import com.anders.SMarker.utils.AppVariables;
 import com.anders.SMarker.utils.Tools;
 
-public class SettingActivity extends AppCompatActivity {
-
+public class SettingActivity extends AppCompatActivity implements CompoundButton.OnCheckedChangeListener {
+    private Switch SwitchWork;
     TextView str_time_val,str_battery_val,str_sensing_val, str_volume_val, str_acl_val;;
     TextView helmet_time_val,helmet_battery_val,helmet_acl_val;
     TextView etc_time_val,etc_receiver_val;
@@ -44,6 +48,8 @@ public class SettingActivity extends AppCompatActivity {
         AppVariables.activitySet = SettingActivity.this;
         initToolbar();
 
+        SwitchWork = findViewById(R.id.SwitchWork);
+
         str_time_val = (TextView)findViewById(R.id.str_time_val);
         str_battery_val = (TextView)findViewById(R.id.str_battery_val);
         str_sensing_val = (TextView)findViewById(R.id.str_sensing_val);
@@ -56,9 +62,21 @@ public class SettingActivity extends AppCompatActivity {
         etc_receiver_val = (TextView)findViewById(R.id.etc_receiver_val);
 
         auto = getSharedPreferences("setting", Activity.MODE_PRIVATE);
-
+        getWorkFl();
         editor = auto.edit();
         sharedPreferences();    // 설정 값 가져오기
+    }
+
+    @Override
+    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked ) {
+        String workFl = "Y";
+        switch( buttonView.getId() ) {
+            case R.id.SwitchWork :
+                if (isChecked) workFl = "Y";
+                else workFl = "N";
+                sendWorkFl(workFl);
+                break;
+        }
     }
 
     private void initToolbar() {
@@ -105,6 +123,38 @@ public class SettingActivity extends AppCompatActivity {
 
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void sendWorkFl(String Work_fl) {
+        ContentValues addData = new ContentValues();
+        // 이 부분 핸드폰번호 장치에서 가져온 것으로 수정 hwang
+        addData.put("phoneNB", AppVariables.User_Phone_Number);
+        addData.put("workFl", Work_fl);
+        NetworkTask networkTask = new NetworkTask(NetworkTask.API_WORK_FL, addData);
+
+        try {
+            networkTask.execute().get();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void getWorkFl() {
+        ContentValues addData = new ContentValues();
+        // 이 부분 핸드폰번호 장치에서 가져온 것으로 수정 hwang
+        addData.put("phoneNB", AppVariables.User_Phone_Number);
+        NetworkTask networkTask = new NetworkTask(NetworkTask.API_GET_WORK_FL, addData);
+
+        try {
+            String result = networkTask.execute().get();
+            if (result != null && !result.isEmpty()) {
+                if ("Y".equals(result)) SwitchWork.setChecked(true);
+                else SwitchWork.setChecked(false);
+                SwitchWork.setOnCheckedChangeListener( this );
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     // 설정 값 가져오기

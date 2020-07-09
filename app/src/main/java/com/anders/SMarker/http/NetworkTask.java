@@ -26,6 +26,8 @@ public class NetworkTask extends AsyncTask<Void, Void, String> {
     public static final String API_ALARM_SEND = API_SERVER_ADRESS +"/useralarm";
     public static final String API_ADMIN_ALARM_SEND = API_SERVER_ADRESS +"/adminalarm";
     public static final String API_IMAGE_UPLOAD_SERVER= API_SERVER_ADRESS + "/photoupload";
+    public static final String API_GET_WORK_FL= API_SERVER_ADRESS + "/getworkfl";
+    public static final String API_WORK_FL= API_SERVER_ADRESS + "/workfl";
 
     /*public static final String API_SERVER_ADRESS ="https://smarker.co.kr/kt";
     public static final String API_CHECK_AGREE = API_SERVER_ADRESS + "/api/select_use_agree.php";
