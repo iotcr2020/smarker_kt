@@ -357,7 +357,7 @@ public class AdapterMessageList extends RecyclerView.Adapter<AdapterMessageList.
 
         Button btnActionOk = dialog.findViewById(R.id.btnActionOk);
 
-        if(!msg.isEmpty()){
+        if(msg != null && !msg.isEmpty()){
             txtActionContent.setText(msg);
             btnActionOk.setVisibility(View.GONE);
         }

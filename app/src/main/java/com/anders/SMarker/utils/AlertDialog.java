@@ -130,7 +130,7 @@ public class AlertDialog extends AppCompatActivity {
                             addData.put("loc_x", latitude);
                             addData.put("loc_y", longitude);
                             addData.put("gubn", gubn);
-                            addData.put("Config_Send_Mode","0");
+                            addData.put("Config_Send_Mode", AppVariables.Config_Send_Mode);
 
                              networkTask = new NetworkTask(NetworkTask.API_ALARM_SEND, addData);
                             try {
@@ -186,7 +186,7 @@ public class AlertDialog extends AppCompatActivity {
                     addData.put("loc_x", latitude);
                     addData.put("loc_y", longitude);
                     addData.put("gubn", gubn);
-                    addData.put("Config_Send_Mode", "0");
+                    addData.put("Config_Send_Mode", AppVariables.Config_Send_Mode);
 
                     networkTask = new NetworkTask(NetworkTask.API_ALARM_SEND, addData);
                     try {
