@@ -1,5 +1,6 @@
 package com.anders.SMarker.fcm;
 
+import android.app.ActivityManager;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
@@ -14,6 +15,8 @@ import android.widget.TextView;
 import com.anders.SMarker.R;
 import com.anders.SMarker.SplashActivity;
 import com.anders.SMarker.utils.AppVariables;
+
+import java.util.List;
 
 public class CustomDialogTeam extends AppCompatActivity {
 
@@ -72,7 +75,10 @@ public class CustomDialogTeam extends AppCompatActivity {
 
                 finish();
                 if (background) {
-                    startActivity(new Intent(CustomDialogTeam.this, SplashActivity.class));
+                    ActivityManager activityManager = (ActivityManager) getApplicationContext().getSystemService(Context.ACTIVITY_SERVICE);
+                    List<ActivityManager.RunningTaskInfo> task_info = activityManager.getRunningTasks(9999);
+                    if (task_info == null || task_info.size() <= 1)
+                        startActivity(new Intent(CustomDialogTeam.this, SplashActivity.class));
                 }
 
             }

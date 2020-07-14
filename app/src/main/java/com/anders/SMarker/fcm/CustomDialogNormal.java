@@ -75,8 +75,6 @@ public class CustomDialogNormal extends AppCompatActivity {
                 }
 
                 finish();
-
-                boolean check = false;
                 if(background){
                     ActivityManager activityManager = (ActivityManager) getApplicationContext().getSystemService(Context.ACTIVITY_SERVICE);
                     List<ActivityManager.RunningTaskInfo> task_info = activityManager.getRunningTasks(9999);
