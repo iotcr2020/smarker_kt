@@ -34,7 +34,7 @@ public class UnCatchTaskService extends Service {
         NetworkTask networkTask = new NetworkTask(NetworkTask.API_LOG_OFF, addData);
         try {
             String result = networkTask.execute().get();
-            if (!result.isEmpty()) {
+            if (result != null && !result.isEmpty()) {
                 resultBuilder = result.split("\\|");
                 if (resultBuilder[0].equals("Y")) {
                     Log.i("UPDATE","Log Off");

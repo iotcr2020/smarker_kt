@@ -379,7 +379,7 @@ public class AdapterMessageList extends RecyclerView.Adapter<AdapterMessageList.
                     try {
                         String result = networkTask.execute().get();
 
-                        if(!result.isEmpty()) {
+                        if(result != null && !result.isEmpty()) {
 
                             MessageList item = items.get(curPos) ;
                             item.setAction_content(txtActionContent.getText().toString());

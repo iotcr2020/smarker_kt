@@ -62,7 +62,7 @@ public class LoginActivity extends AppCompatActivity {
 
             try {
                 String result = networkTask.execute().get();
-                if (!result.isEmpty()) {
+                if (result != null && !result.isEmpty()) {
                     resultBuilder = result.split("\\|");
                     if (resultBuilder[0].equals("Y")) {
                         // 성공 ConnectActivity

@@ -246,7 +246,7 @@ public class ConnectActivity extends AppCompatActivity {
         Log.i("UPDATE==>","Strip Mac");
         try {
             String result = networkTask.execute().get();
-            if (!result.isEmpty()) {
+            if (result != null && !result.isEmpty()) {
                 resultBuilder = result.split("\\|");
                 if (resultBuilder[0].equals("Y")) {
                     Log.i("UPDATE","STRIP Mac Update ok");
@@ -267,7 +267,7 @@ public class ConnectActivity extends AppCompatActivity {
         Log.i("UPDATE==>","Helmet Mac");
         try {
             String result = networkTask.execute().get();
-            if (!result.isEmpty()) {
+            if (result != null && !result.isEmpty()) {
                 resultBuilder = result.split("\\|");
                 if (resultBuilder[0].equals("Y")) {
                     Log.i("UPDATE","Helmet Mac Update ok");
@@ -574,7 +574,7 @@ public class ConnectActivity extends AppCompatActivity {
         NetworkTask networkTask = new NetworkTask(NetworkTask.API_LOG_OFF, addData);
         try {
             String result = networkTask.execute().get();
-            if (!result.isEmpty()) {
+            if (result != null && !result.isEmpty()) {
                 resultBuilder = result.split("\\|");
                 if (resultBuilder[0].equals("Y")) {
                     Log.i("UPDATE","Log Off");

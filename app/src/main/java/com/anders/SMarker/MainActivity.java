@@ -762,7 +762,7 @@ public class MainActivity extends AppCompatActivity implements DialogInterface.O
         NetworkTask networkTask = new NetworkTask(NetworkTask.API_UPDATE_DUST_VALUE, addData);
         try {
             String result = networkTask.execute().get();
-            if (!result.isEmpty()) {
+            if (result != null && !result.isEmpty()) {
                 resultBuilder = result.split("\\|");
                 if (resultBuilder[0].equals("Y")) {
                     Log.i("UPDATE","Start Work");
@@ -1487,36 +1487,36 @@ public class MainActivity extends AppCompatActivity implements DialogInterface.O
 
         int non_read_cnt=0;
         try {
-            JSONArray jsonArray = new JSONArray(receiveString);
-            int arraycnt = jsonArray.length();
+            if (receiveString != null && !"".equals(receiveString)) {
+                JSONArray jsonArray = new JSONArray(receiveString);
+                int arraycnt = jsonArray.length();
 
 
-            for(int i=0;i<arraycnt;i++){
+                for(int i=0;i<arraycnt;i++){
 
-                JSONObject item = jsonArray.getJSONObject(i);
+                    JSONObject item = jsonArray.getJSONObject(i);
 
-                String m_co_idx = item.getString("co_idx");
-                String m_gubn = item.getString("gubn");
-                String m_content = item.getString("content");
-                String m_year = item.getString("year");
-                String m_month = item.getString("month");
-                String m_day = item.getString("day");
+                    String m_co_idx = item.getString("co_idx");
+                    String m_gubn = item.getString("gubn");
+                    String m_content = item.getString("content");
+                    String m_year = item.getString("year");
+                    String m_month = item.getString("month");
+                    String m_day = item.getString("day");
 
-                MainAlertList messageData = new MainAlertList();
-                String date = m_year+"년 "+m_month+"월 "+m_day +"일 위험경보";
+                    MainAlertList messageData = new MainAlertList();
+                    String date = m_year+"년 "+m_month+"월 "+m_day +"일 위험경보";
 
-                messageData.setM_co_idx(m_co_idx);
-                messageData.setM_gubn(m_gubn);
-                messageData.setM_content(m_content);
-                messageData.setM_date(date);
-                alertLists.add(messageData);
+                    messageData.setM_co_idx(m_co_idx);
+                    messageData.setM_gubn(m_gubn);
+                    messageData.setM_content(m_content);
+                    messageData.setM_date(date);
+                    alertLists.add(messageData);
+                }
+
+                adapterMainAlertList = new AdapterMainAlertList(MainActivity.this, alertLists);
+                adapterMainAlertList.notifyDataSetChanged();
+                alertrecyclerview.setAdapter(adapterMainAlertList);
             }
-
-            adapterMainAlertList = new AdapterMainAlertList(MainActivity.this, alertLists);
-            adapterMainAlertList.notifyDataSetChanged();
-            alertrecyclerview.setAdapter(adapterMainAlertList);
-
-
         } catch (JSONException e) {
 
             //Log.d(TAG, "showResult : ", e);
@@ -1534,7 +1534,7 @@ public class MainActivity extends AppCompatActivity implements DialogInterface.O
 
         try {
             String result =  networkTask.execute().get();
-            if(!result.isEmpty()){
+            if(result != null && !result.isEmpty()){
                 receiveString = result;
 
             }else{
@@ -1613,7 +1613,7 @@ public class MainActivity extends AppCompatActivity implements DialogInterface.O
         NetworkTask networkTask = new NetworkTask(NetworkTask.API_LOG_OFF, addData);
         try {
             String result = networkTask.execute().get();
-            if (!result.isEmpty()) {
+            if (result != null && !result.isEmpty()) {
                 resultBuilder = result.split("\\|");
                 if (resultBuilder[0].equals("Y")) {
                     Log.i("UPDATE","Log Off");

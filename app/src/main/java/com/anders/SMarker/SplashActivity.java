@@ -248,7 +248,7 @@ public class SplashActivity extends Activity {
 
             try {
                 String result = networkTask.execute().get();
-                if (!result.isEmpty()) {
+                if (result != null && !result.isEmpty()) {
                     resultBuilder = result.split("\\|", -1);
                     if (resultBuilder[0].equals("Y")) {
                         startLoginActivity();

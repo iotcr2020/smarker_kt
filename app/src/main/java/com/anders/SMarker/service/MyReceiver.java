@@ -28,7 +28,7 @@ public class MyReceiver extends BroadcastReceiver {
         try {
             String result = networkTask.execute().get();
 
-            if (!result.isEmpty()) {
+            if (result != null && !result.isEmpty()) {
                 resultBuilder = result.split("\\|");
 
                 if (resultBuilder[0].equals("Y")) {

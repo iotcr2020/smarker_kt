@@ -56,7 +56,7 @@ public class AlarmDlg extends AppCompatActivity {
     public static void showAlarmDialog(Context con, String Gubun){
         context = con;
         sGubun = Gubun;
-        if(sGubun.isEmpty()) sGubun="팀원";
+        if(sGubun != null && sGubun.isEmpty()) sGubun="팀원";
 
 
         //위치정보 권한

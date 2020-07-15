@@ -249,7 +249,7 @@ public class AlertDialog extends AppCompatActivity {
     public static void showAlarmDialog(Context con, String Gubun){
 
         sGubun = Gubun;
-        if(sGubun.isEmpty()) sGubun="팀원";
+        if(sGubun != null && sGubun.isEmpty()) sGubun="팀원";
 
 
     }
