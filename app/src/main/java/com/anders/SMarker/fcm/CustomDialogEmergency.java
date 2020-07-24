@@ -61,7 +61,7 @@ public class CustomDialogEmergency extends AppCompatActivity {
         txtContent.setText(message);
 
 
-        soundEmerId =  soundPoolEmer.play(emerAlarm, 1, 1, 0, -1, 1);
+        soundEmerId =  soundPoolEmer.play(emerAlarm, 1, 1, 0, 0, 1);
 
         btnAlarmOk.setOnClickListener(new View.OnClickListener() {
             @Override

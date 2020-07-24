@@ -63,7 +63,7 @@ public class CustomDialogNormal extends AppCompatActivity {
         final Button btn_dlg_info_close = (Button)findViewById(R.id.btn_dlg_info_close);
         txtContent.setText(message);
 
-         soundNormalId = soundPoolNormal.play(normalAlarm, 1, 1, 0, -1, 1);
+         soundNormalId = soundPoolNormal.play(normalAlarm, 1, 1, 0, 0, 1);
 
 
 

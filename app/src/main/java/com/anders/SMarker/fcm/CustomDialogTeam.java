@@ -62,7 +62,7 @@ public class CustomDialogTeam extends AppCompatActivity {
         txtLocation.setText(location);
 
         if (sound.equals("1")) {
-            soundEmerId = soundPoolEmer.play(emerAlarm, 1, 1, 0, -1, 1);
+            soundEmerId = soundPoolEmer.play(emerAlarm, 1, 1, 0, 0, 1);
 
         }
 
