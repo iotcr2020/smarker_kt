@@ -231,8 +231,7 @@ public class ListTeamInfo extends AppCompatActivity {
             addData.put("phoneNB", AppVariables.User_Phone_Number);
             addData.put("serverURL", NetworkTask.API_SERVER_ADRESS);
             addData.put("offset", itemTotalCount);
-            //NetworkTask networkTask = new NetworkTask(NetworkTask.API_TEAM_LIST_PAGE, addData);
-            NetworkTask networkTask = new NetworkTask(NetworkTask.API_TEAM_LIST, addData);
+            NetworkTask networkTask = new NetworkTask(NetworkTask.API_TEAM_LIST_PAGE, addData);
             try {
                 String result =  networkTask.execute().get();
                 if(result != null && !result.isEmpty()){
