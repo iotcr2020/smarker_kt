@@ -2,6 +2,8 @@ package com.anders.SMarker;
 
 import android.content.ContentValues;
 import android.content.Intent;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
@@ -57,6 +59,14 @@ public class LoginActivity extends AppCompatActivity {
             String[] resultBuilder = null;
             ContentValues addData = new ContentValues();
             // 이 부분 핸드폰번호 장치에서 가져온 것으로 수정 hwang
+
+            String version = null;
+            try {
+                PackageInfo i = this.getPackageManager().getPackageInfo(this.getPackageName(), 0);
+                version = i.versionName;
+            } catch(PackageManager.NameNotFoundException e) { }
+
+            addData.put("version", version);
             addData.put("phoneNB", AppVariables.User_Phone_Number);
             NetworkTask networkTask = new NetworkTask(NetworkTask.API_CHECK_PHONE_NUMBER, addData);
 

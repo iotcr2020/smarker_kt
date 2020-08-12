@@ -5,7 +5,7 @@ import android.os.AsyncTask;
 import android.util.Log;
 
 public class NetworkTask extends AsyncTask<Void, Void, String> {
-    public static final String API_SERVER_ADRESS ="http://52.78.198.132:8080/ktsmarkerapi";
+    public static final String API_SERVER_ADRESS ="https://api.ktsmarkeriot.kt.co.kr/ktsmarkerapi";
     public static final String API_CHECK_AGREE = API_SERVER_ADRESS + "/agreecheck";
     public static final String API_UPDATE_AGREE = API_SERVER_ADRESS + "/agree";
     public static final String API_CHECK_PHONE_NUMBER = API_SERVER_ADRESS + "/phone";
@@ -23,6 +23,7 @@ public class NetworkTask extends AsyncTask<Void, Void, String> {
     public static final String API_ADMIN_ACTION_SEND = API_SERVER_ADRESS + "/adminaction";
     public static final String API_UPDATE_DUST_VALUE = API_SERVER_ADRESS + "/dust";
     public static final String API_TEAM_LIST = API_SERVER_ADRESS + "/userlist";
+    public static final String API_TEAM_LIST_PAGE = API_SERVER_ADRESS + "/userlistpage";
     public static final String API_ALARM_SEND = API_SERVER_ADRESS +"/useralarm";
     public static final String API_ADMIN_ALARM_SEND = API_SERVER_ADRESS +"/adminalarm";
     public static final String API_IMAGE_UPLOAD_SERVER= API_SERVER_ADRESS + "/photoupload";

@@ -787,7 +787,7 @@ public class BleService extends Service {
         popupIntent.putExtra("countChk", count);
         popupIntent.putExtra("count", AppVariables.Config_Delay_Time);
 
-        startActivity(popupIntent);
+        startActivity(popupIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
     }
 
     /************************************************************************************************************************

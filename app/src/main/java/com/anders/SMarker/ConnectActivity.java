@@ -559,7 +559,9 @@ public class ConnectActivity extends AppCompatActivity {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 sendToServerExit();
-                finish();
+                moveTaskToBack(true);
+                finishAndRemoveTask();
+                android.os.Process.killProcess(android.os.Process.myPid());
             }
         });
         builder.setNegativeButton("취소", null);

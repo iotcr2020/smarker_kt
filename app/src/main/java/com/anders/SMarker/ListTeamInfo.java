@@ -177,6 +177,7 @@ public class ListTeamInfo extends AppCompatActivity {
     }
 
     private void listRefresh(){
+        mAdapter.notifyItemRangeRemoved(0, mArrayList.size());
         try {
             JSONArray jsonArray = new JSONArray(mJsonString);
 
@@ -219,11 +220,80 @@ public class ListTeamInfo extends AppCompatActivity {
 
     }
 
+    RecyclerView.OnScrollListener onScrollListener = new RecyclerView.OnScrollListener() {
+        @Override
+        public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+        super.onScrolled(recyclerView, dx, dy);
+        int lastVisibleItemPosition = ((LinearLayoutManager) recyclerView.getLayoutManager()).findLastCompletelyVisibleItemPosition();
+        int itemTotalCount = recyclerView.getAdapter().getItemCount();
+        if (lastVisibleItemPosition == itemTotalCount - 1) {
+            ContentValues addData = new ContentValues();
+            addData.put("phoneNB", AppVariables.User_Phone_Number);
+            addData.put("serverURL", NetworkTask.API_SERVER_ADRESS);
+            addData.put("offset", itemTotalCount);
+            //NetworkTask networkTask = new NetworkTask(NetworkTask.API_TEAM_LIST_PAGE, addData);
+            NetworkTask networkTask = new NetworkTask(NetworkTask.API_TEAM_LIST, addData);
+            try {
+                String result =  networkTask.execute().get();
+                if(result != null && !result.isEmpty()){
+                    mJsonString = result;
+                    try {
+                        JSONArray jsonArray = new JSONArray(mJsonString);
+
+                        for(int i=0;i<jsonArray.length();i++){
+
+                            JSONObject item = jsonArray.getJSONObject(i);
+
+                            int user_idx = item.getInt("user_idx");
+                            String user_nm = item.getString("user_nm");
+                            String user_mPhone = item.getString("user_mPhone");
+                            String helmet_state = item.getString("HELMET_STATE");
+                            String ut_nm = item.getString("ut_nm");
+                            String userPhoto = item.getString("userPhoto");
+                            String user_blood = item.getString("user_blood");
+                            if(user_blood.length()>0){
+                                user_blood =  user_blood+"형";
+                            }
+                            TeamList teamData = new TeamList();
+
+                            teamData.setUser_idx(user_idx);
+                            teamData.setUser_nm(user_nm);
+                            teamData.setUser_mPhone(user_mPhone);
+                            teamData.setHelmet_state(helmet_state);
+                            teamData.setUt_nm(ut_nm);
+                            teamData.setUserimage(userPhoto);
+                            teamData.setUser_blood(user_blood);
+
+                            mAdapter.getItem(i).setHelmet_state(helmet_state);
+
+                            mArrayList.add(teamData);
+
+                        }
+                        //mAdapter.notifyDataSetChanged();
+                        recyclerView.post(new Runnable() {
+                            public void run() {
+                                mAdapter.notifyItemInserted(mArrayList.size() - 1);
+                            }
+                        });
+                    } catch (JSONException e) {
+                        Log.d(TAG, "showResult : ", e);
+                    }
+                }else{
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+
+            }
+        }
+        }
+    };
+
     private void initComponent() {
         recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.addItemDecoration(new LineItemDecoration(this, LinearLayout.VERTICAL));
         recyclerView.setHasFixedSize(true);
+        recyclerView.addOnScrollListener(onScrollListener);
 
         RecyclerView.ItemAnimator animator = recyclerView.getItemAnimator();
         if (animator instanceof SimpleItemAnimator) {
@@ -315,7 +385,8 @@ public class ListTeamInfo extends AppCompatActivity {
         ContentValues addData = new ContentValues();
         addData.put("phoneNB", AppVariables.User_Phone_Number);
         addData.put("serverURL", NetworkTask.API_SERVER_ADRESS);
-        NetworkTask networkTask = new NetworkTask(NetworkTask.API_TEAM_LIST, addData);
+        addData.put("offset", 0);
+        NetworkTask networkTask = new NetworkTask(NetworkTask.API_TEAM_LIST_PAGE, addData);
 
         try {
             String result =  networkTask.execute().get();
@@ -423,7 +494,7 @@ public class ListTeamInfo extends AppCompatActivity {
         }else if(item.getItemId()==R.id.btnRefresh){
             mArrayList = new ArrayList<>();
             teamListView();
-            listRefresh();
+            initComponent();
         }else if (item.getItemId()== R.id.action_settings){
             Intent intent = new Intent(getApplicationContext(), SettingActivity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);

@@ -2,9 +2,12 @@ package com.anders.SMarker;
 
 import android.app.Activity;
 import android.content.ContentValues;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
@@ -31,6 +34,7 @@ public class SettingActivity extends AppCompatActivity implements CompoundButton
     TextView str_time_val,str_battery_val,str_sensing_val, str_volume_val, str_acl_val;;
     TextView helmet_time_val,helmet_battery_val,helmet_acl_val;
     TextView etc_time_val,etc_receiver_val;
+    TextView appversion;
 
     int str_time_set, str_battery_set, str_sensing_set, str_acl_set = 0;
     int helmet_time_set,helmet_battery_set = 0;
@@ -60,10 +64,12 @@ public class SettingActivity extends AppCompatActivity implements CompoundButton
         helmet_acl_val  = (TextView)findViewById(R.id.helmet_acl_val);
         etc_time_val = (TextView)findViewById(R.id.etc_time_val);
         etc_receiver_val = (TextView)findViewById(R.id.etc_receiver_val);
+        appversion = (TextView)findViewById(R.id.appversion);
 
         auto = getSharedPreferences("setting", Activity.MODE_PRIVATE);
         getWorkFl();
         editor = auto.edit();
+        appversion.setText("Version " + getVersionInfo(this));
         sharedPreferences();    // 설정 값 가져오기
     }
 
@@ -103,8 +109,6 @@ public class SettingActivity extends AppCompatActivity implements CompoundButton
         Drawable icon_set = getResources().getDrawable(R.drawable.popup_setting);
         icon_set.setColorFilter(getResources().getColor(R.color.mainColor), PorterDuff.Mode.SRC_IN);
         item_set.setIcon(icon_set);
-
-
 
         return true;
     }
@@ -155,6 +159,15 @@ public class SettingActivity extends AppCompatActivity implements CompoundButton
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    public String getVersionInfo(Context context){
+        String version = null;
+        try {
+            PackageInfo i = context.getPackageManager().getPackageInfo(context.getPackageName(), 0);
+            version = i.versionName;
+        } catch(PackageManager.NameNotFoundException e) { }
+        return version;
     }
 
     // 설정 값 가져오기
