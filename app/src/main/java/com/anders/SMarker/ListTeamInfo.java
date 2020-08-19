@@ -234,7 +234,7 @@ public class ListTeamInfo extends AppCompatActivity {
             NetworkTask networkTask = new NetworkTask(NetworkTask.API_TEAM_LIST_PAGE, addData);
             try {
                 String result =  networkTask.execute().get();
-                if(result != null && !result.isEmpty()){
+                if(result != null && !"[]".equals(result) && !result.isEmpty()){
                     mJsonString = result;
                     try {
                         JSONArray jsonArray = new JSONArray(mJsonString);
