@@ -19,6 +19,12 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+
+    applicationVariants.all { variant ->
+        variant.javaCompileProvider.get().doLast {
+            runAllatori(variant)
+        }
+    }
 }
 
 /* IMPORTANT :
@@ -81,3 +87,27 @@ dependencies {
 
 }
 apply plugin: 'com.google.gms.google-services'
+
+def runAllatori(variant) {
+    copy {
+        from "$projectDir/allatori.xml"
+        into "$buildDir/intermediates/classes/"
+        expand(classesRoot: variant.javaCompileProvider.get().destinationDir,
+               kotlinRoot: "${buildDir}/tmp/kotlin-classes/${variant.name}",
+               androidJar: "${android.sdkDirectory}/platforms/${android.compileSdkVersion}/android.jar",
+               classpathJars: variant.javaCompileProvider.get().classpath.getAsPath(),
+               logFile: "allatori-log-${variant.name}.xml")
+        rename('allatori.xml', "allatori-${variant.name}.xml")
+    }
+
+    new File("${variant.javaCompileProvider.get().destinationDir}-obfuscated").deleteDir()
+
+    javaexec {
+        main = 'com.allatori.Obfuscate'
+        classpath = files("$rootDir/allatori/allatori.jar")
+        args "$buildDir/intermediates/classes/allatori-${variant.name}.xml"
+    }
+
+    new File("${variant.javaCompileProvider.get().destinationDir}").deleteDir()
+    new File("${variant.javaCompileProvider.get().destinationDir}-obfuscated").renameTo(new File("${variant.javaCompileProvider.get().destinationDir}"))
+}

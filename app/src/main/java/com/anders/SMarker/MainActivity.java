@@ -184,12 +184,6 @@ public class MainActivity extends AppCompatActivity implements DialogInterface.O
         Button_Find_Helmet = findViewById(R.id.Button_Find_Helmet);
         Button_Acl_Helmet = findViewById(R.id.Button_Acl_Helmet);
         imgFamilyPhoto = (ImageView)findViewById(R.id.imgFamilyPhoto);
-        imgFamilyPhoto.setOnClickListener(new Button.OnClickListener(){
-            @Override
-            public void onClick(View view){
-                carmeraImageSelect();
-            }
-        });
 
         btnStartStop = (Button)findViewById(R.id.btnStartStop);
         btnStartStop.setOnClickListener(new Button.OnClickListener(){
@@ -702,7 +696,14 @@ public class MainActivity extends AppCompatActivity implements DialogInterface.O
             btnStartStop.setTextColor(getResources().getColor(R.color.mainColor));
             bIsStart = false;
         }else {
-            if (AppVariables.iHelmetBatteryAmount >= 50) {
+            WorkDlg.showWorkDlg(this);
+            WorkDlg.dialog.setOnDismissListener(this);
+
+            btnStartStop.setText("작업종료");
+            btnStartStop.setBackgroundResource(R.drawable.btn_rounded_accent);
+            btnStartStop.setTextColor(getResources().getColor(R.color.overlay_light_80));
+            bIsStart = true;
+            /*if (AppVariables.iHelmetBatteryAmount >= 50) {
                 WorkDlg.showWorkDlg(this);
                 WorkDlg.dialog.setOnDismissListener(this);
 
@@ -722,7 +723,7 @@ public class MainActivity extends AppCompatActivity implements DialogInterface.O
 
                 AlertDialog alertDialog = builder.create();
                 alertDialog.show();
-            }
+            }*/
         }
     }
 

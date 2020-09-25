@@ -34,7 +34,7 @@
             android:orientation="vertical">
 
 
-            <LinearLayout
+            <!--<LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="center"
@@ -87,7 +87,7 @@
                     android:padding="@dimen/spacing_middle"
                     >
 
-                    <!-- 사용자정보 - 사용자 이름 -->
+                    &lt;!&ndash; 사용자정보 - 사용자 이름 &ndash;&gt;
 
                     <LinearLayout
                         android:id="@+id/user_name"
@@ -118,9 +118,9 @@
 
                     </LinearLayout>
 
-                    <!-- 사용자정보 - 사용자 이름 end -->
+                    &lt;!&ndash; 사용자정보 - 사용자 이름 end &ndash;&gt;
 
-                    <!-- 사용자정보 - 사용자 소속 -->
+                    &lt;!&ndash; 사용자정보 - 사용자 소속 &ndash;&gt;
                     <View
                         android:id="@+id/view16"
                         android:layout_width="match_parent"
@@ -157,9 +157,9 @@
                             android:textSize="16sp" />
 
                     </LinearLayout>
-                    <!-- 사용자정보 - 사용자 소속 end -->
+                    &lt;!&ndash; 사용자정보 - 사용자 소속 end &ndash;&gt;
 
-                    <!-- 사용자정보 - 사용자 휴대폰 -->
+                    &lt;!&ndash; 사용자정보 - 사용자 휴대폰 &ndash;&gt;
                     <View
                         android:id="@+id/view19"
                         android:layout_width="match_parent"
@@ -196,9 +196,9 @@
                             android:textSize="16sp" />
 
                     </LinearLayout>
-                    <!-- 사용자정보 - 사용자 휴대폰 end -->
+                    &lt;!&ndash; 사용자정보 - 사용자 휴대폰 end &ndash;&gt;
 
-                    <!-- 사용자정보 -  사용자 이메일 -->
+                    &lt;!&ndash; 사용자정보 -  사용자 이메일 &ndash;&gt;
                     <View
                         android:id="@+id/view21"
                         android:layout_width="match_parent"
@@ -235,15 +235,16 @@
                             android:textSize="16sp" />
 
                     </LinearLayout>
-                    <!-- 사용자 정보 - 사용자 이메일 end -->
+                    &lt;!&ndash; 사용자 정보 - 사용자 이메일 end &ndash;&gt;
 
                 </LinearLayout>
 
-            </android.support.v7.widget.CardView>
+            </android.support.v7.widget.CardView>-->
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:paddingTop="60dp"
                 android:layout_marginStart="@dimen/spacing_large"
                 android:layout_marginLeft="@dimen/spacing_large"
                 android:layout_marginTop="@dimen/spacing_large"

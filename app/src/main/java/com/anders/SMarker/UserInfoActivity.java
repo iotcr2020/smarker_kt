@@ -83,21 +83,21 @@ public class UserInfoActivity extends AppCompatActivity {
         AppVariables.activitySet = UserInfoActivity.this;
         initComponent();
         initToolbar();
-        LoadFamilyPhoto();
+        //LoadFamilyPhoto();
 
-        user_image = (ImageView)findViewById(R.id.user_image);
+        /*user_image = (ImageView)findViewById(R.id.user_image);
 
         TextView user_name_val = (TextView)findViewById(R.id.user_name_val);
         TextView user_team_val = (TextView)findViewById(R.id.user_team_val);
         TextView user_hp_val = (TextView)findViewById(R.id.user_hp_val);
-        TextView user_email_val = (TextView)findViewById(R.id.user_email_val);
+        TextView user_email_val = (TextView)findViewById(R.id.user_email_val);*/
         TextView helmet_id_val = (TextView)findViewById(R.id.helmet_id_val);
         TextView strip_id_val = (TextView)findViewById(R.id.strip_id_val);
 
-        user_name_val.setText(AppVariables.User_Name);
+        /*user_name_val.setText(AppVariables.User_Name);
         user_team_val.setText(AppVariables.User_Team);
         user_hp_val.setText(AppVariables.User_Phone_Number);
-        user_email_val.setText(AppVariables.User_Email);
+        user_email_val.setText(AppVariables.User_Email);*/
         helmet_id_val.setText(AppVariables.Helmet_Mac_Adress);
         strip_id_val.setText(AppVariables.Strip_Mac_Adress);
     }
@@ -159,7 +159,7 @@ public class UserInfoActivity extends AppCompatActivity {
     }
     private void LoadFamilyPhoto(){
         //사진 있으면 뿌려주기
-        SharedPreferences auto = getSharedPreferences("myimage", Activity.MODE_PRIVATE);
+        /*SharedPreferences auto = getSharedPreferences("myimage", Activity.MODE_PRIVATE);
         if (auto !=null)
         {
             String image=auto.getString("myimagestrings", "");
@@ -168,7 +168,7 @@ public class UserInfoActivity extends AppCompatActivity {
                 ImageView iv = (ImageView) findViewById(R.id.user_image);
                 iv.setImageBitmap(bitmap);
             }
-        }
+        }*/
     }
     private void initToolbar() {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -226,12 +226,12 @@ public class UserInfoActivity extends AppCompatActivity {
 
     public void clickSetting(View view) {//메뉴 클릭 시 환경설정
 
-        int id = view.getId();
+        /*int id = view.getId();
         switch (id) {
             case R.id.user_image://사용자 이미지 추가
                 carmeraImageSelect();
                 break;
-        }
+        }*/
     }
 
     private boolean tedPermission() {

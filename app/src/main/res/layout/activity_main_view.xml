@@ -43,6 +43,7 @@
                 android:orientation="vertical"
                 android:paddingLeft="@dimen/spacing_medium"
                 android:paddingRight="@dimen/spacing_medium"
+                android:paddingTop="@dimen/spacing_middle"
                 android:paddingBottom="@dimen/spacing_middle">
 
                 <LinearLayout
@@ -142,7 +143,7 @@
                                 android:layout_height="150dp"
                                 android:layout_centerInParent="true"
                                 android:foregroundGravity="center"
-                                android:src="@drawable/no_img"
+                                android:src="@drawable/helmet"
                                 app:civ_border="true"
                                 app:civ_border_color="@color/grey_20"
                                 app:civ_shadow="true"
@@ -155,9 +156,6 @@
                                 android:layout_centerInParent="true"
                                 android:layout_alignParentBottom="true"
                                 android:paddingBottom="35dp"
-                                android:textSize="11dp"
-                                android:textStyle="bold"
-                                android:text="사랑하는 가족사진을\n등록하세요♡"
                                 android:gravity="center"
                                 android:visibility="gone"/>
                         </RelativeLayout>
