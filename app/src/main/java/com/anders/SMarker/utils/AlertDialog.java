@@ -32,6 +32,8 @@ import com.anders.SMarker.http.NetworkTask;
 import com.anders.SMarker.service.GpsTracker;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.List;
 import java.util.Locale;
 
@@ -126,6 +128,15 @@ public class AlertDialog extends AppCompatActivity {
 
                             String address = getCurrentAddress(latitude, longitude);
 
+                            try {
+                                address = URLEncoder.encode(address, "UTF-8");
+                            } catch (UnsupportedEncodingException ec) {
+                            }
+                            try {
+                                gubn = URLEncoder.encode(gubn, "UTF-8");
+                            } catch (UnsupportedEncodingException ec) {
+                            }
+
                             addData.put("user_location", address);
                             addData.put("loc_x", latitude);
                             addData.put("loc_y", longitude);
@@ -181,6 +192,15 @@ public class AlertDialog extends AppCompatActivity {
                     double longitude = gpsTracker.getLongitude();
 
                     String address = getCurrentAddress(latitude, longitude);
+
+                    try {
+                        address = URLEncoder.encode(address, "UTF-8");
+                    } catch (UnsupportedEncodingException ec) {
+                    }
+                    try {
+                        gubn = URLEncoder.encode(gubn, "UTF-8");
+                    } catch (UnsupportedEncodingException ec) {
+                    }
 
                     addData.put("user_location", address);
                     addData.put("loc_x", latitude);

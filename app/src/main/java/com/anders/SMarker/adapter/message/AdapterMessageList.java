@@ -101,7 +101,7 @@ public class AdapterMessageList extends RecyclerView.Adapter<AdapterMessageList.
 
                             String cnt = non_message_cnt.getText().toString();
                             int cnt_ = Integer.parseInt(cnt);
-                            non_message_cnt.setText(Integer.toString(cnt_-1));
+                            if (cnt_ > 0) non_message_cnt.setText(Integer.toString(cnt_-1));
                         }
 
                     view.findViewById(R.id.message_parent).setBackgroundColor(ctx.getResources().getColor(R.color.white_transparency));

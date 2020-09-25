@@ -28,6 +28,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.List;
 import java.util.Locale;
 
@@ -96,11 +98,21 @@ public class AlarmDlg extends AppCompatActivity {
                         double longitude = gpsTracker.getLongitude();
 
                         String address = getCurrentAddress(latitude, longitude);
+                        String gubn = "";
+
+                        try {
+                            address = URLEncoder.encode(address, "UTF-8");
+                        } catch (UnsupportedEncodingException ec) {
+                        }
+                        try {
+                            gubn = URLEncoder.encode(sGubun, "UTF-8");
+                        } catch (UnsupportedEncodingException ec) {
+                        }
 
                         addData.put("user_location",address);
                         addData.put("loc_x",latitude);
                         addData.put("loc_y",longitude);
-                        addData.put("gubn",sGubun);
+                        addData.put("gubn",gubn);
                         addData.put("Config_Send_Mode",AppVariables.Config_Send_Mode);
 
                         networkTask = new NetworkTask(NetworkTask.API_ALARM_SEND, addData);
@@ -315,13 +327,25 @@ public class AlarmDlg extends AppCompatActivity {
                     ContentValues addData = new ContentValues();
                     addData.put("user_hp", AppVariables.User_Phone_Number);
                     addData.put("user_idx",mAdapter.getTeamUserIdx());
-                    addData.put("content",txtMessage.getText().toString());
+
+                    String content = "";
+                    try {
+                        content = URLEncoder.encode(txtMessage.getText().toString(), "UTF-8");
+                    } catch (UnsupportedEncodingException ec) {
+                    }
+                    addData.put("content",content);
                     int selectedId = radioGroup.getCheckedRadioButtonId();
                     //Toast.makeText(context, "팀원에게 긴급상황을 요청했습니다."+selectedId, Toast.LENGTH_LONG).show();
 
                     final RadioButton btnGubn = (RadioButton) dialog.findViewById(selectedId);
 
-                    addData.put("gubn",btnGubn.getText().toString());
+                    String gubn = "";
+                    try {
+                        gubn = URLEncoder.encode(btnGubn.getText().toString(), "UTF-8");
+                    } catch (UnsupportedEncodingException ec) {
+                    }
+
+                    addData.put("gubn", gubn);
 
                     networkTask = new NetworkTask(NetworkTask.API_ADMIN_ALARM_SEND, addData);
                     try {
