@@ -36,7 +36,6 @@ public class MyReceiver extends BroadcastReceiver {
                 }
             }
         } catch (Exception e) {
-            e.printStackTrace();
         }
     }
 

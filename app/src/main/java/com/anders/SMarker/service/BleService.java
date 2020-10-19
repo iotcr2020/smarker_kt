@@ -707,7 +707,6 @@ public class BleService extends Service {
         } catch(Exception e) {
             bExeThread=true;
             myLog("STRIP UI Exception==>"+e.toString());
-            e.printStackTrace();
         }
     }
 
@@ -772,7 +771,6 @@ public class BleService extends Service {
         {
             bExeThread=true;
             myLog(e.toString());
-            e.printStackTrace();
         }
     }
 
@@ -848,7 +846,7 @@ public class BleService extends Service {
                             bResult = mBluetoothGattHelmet.writeCharacteristic(mWrite);
                         }
                     }
-                    catch (Exception e){e.printStackTrace();}
+                    catch (Exception e){}
                     result = true;
                 }
             }
@@ -860,7 +858,6 @@ public class BleService extends Service {
         catch (Exception e)
         {
             myLog("Write Data Exception : "+ e.toString());
-            e.printStackTrace();
         }
 
         return bResult;

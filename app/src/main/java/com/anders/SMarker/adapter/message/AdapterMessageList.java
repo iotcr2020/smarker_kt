@@ -112,7 +112,6 @@ public class AdapterMessageList extends RecyclerView.Adapter<AdapterMessageList.
 
                 //}
             } catch (Exception e) {
-                e.printStackTrace();
 
             }
         }
@@ -393,8 +392,6 @@ public class AdapterMessageList extends RecyclerView.Adapter<AdapterMessageList.
                             Toast.makeText(ctx, "조치 전송이 실패했습니다. 다시 전송하세요.", Toast.LENGTH_LONG).show();
                         }
                     } catch (Exception e ) {
-
-                        e.printStackTrace();
                         dialog.dismiss();
                         Toast.makeText(ctx, "조치 전송이 실패했습니다. 다시 전송하세요.", Toast.LENGTH_LONG).show();
 

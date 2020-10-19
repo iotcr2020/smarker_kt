@@ -60,6 +60,7 @@ import com.anders.SMarker.model.MainAlertList;
 import com.anders.SMarker.model.Weather;
 import com.anders.SMarker.service.BleService;
 import com.anders.SMarker.service.GpsTracker;
+import com.anders.SMarker.utils.AESEncryptor;
 import com.anders.SMarker.utils.AlarmDlg;
 import com.anders.SMarker.utils.AppVariables;
 import com.anders.SMarker.utils.BottomNavigationViewHelper;
@@ -770,7 +771,6 @@ public class MainActivity extends AppCompatActivity implements DialogInterface.O
                 }
             }
         } catch (Exception e) {
-            e.printStackTrace();
         }
     }
 
@@ -793,7 +793,6 @@ public class MainActivity extends AppCompatActivity implements DialogInterface.O
                 }
             }
         } catch (Exception e) {
-            e.printStackTrace();
         }
     }
 
@@ -816,7 +815,6 @@ public class MainActivity extends AppCompatActivity implements DialogInterface.O
                 }
             }
         } catch (Exception e) {
-            e.printStackTrace();
         }
     }
 
@@ -857,7 +855,6 @@ public class MainActivity extends AppCompatActivity implements DialogInterface.O
                         cropImage();
 
                     }catch (Exception e){
-                        e.printStackTrace();
                         Log.v("알림","앨범에서 가져오기 에러");
                     }
                 }
@@ -891,7 +888,6 @@ public class MainActivity extends AppCompatActivity implements DialogInterface.O
                     }
 
                 }catch (Exception e){
-                    e.printStackTrace();
                 }
                 break;
             }
@@ -921,7 +917,6 @@ public class MainActivity extends AppCompatActivity implements DialogInterface.O
                         }).start();
                     }
                 }catch (Exception e){
-                    e.printStackTrace();
                 }
                 break;
             }
@@ -1018,7 +1013,6 @@ public class MainActivity extends AppCompatActivity implements DialogInterface.O
                 dos.flush();
                 dos.close();
             } catch (MalformedURLException ex) {
-                ex.printStackTrace();
                 runOnUiThread(new Runnable() {
 
                     public void run() {
@@ -1032,10 +1026,6 @@ public class MainActivity extends AppCompatActivity implements DialogInterface.O
                 Log.e("Upload file to server", "error: " + ex.getMessage(), ex);
 
             } catch (Exception e) {
-                e.printStackTrace();
-
-
-
                 runOnUiThread(new Runnable() {
 
                     public void run() {
@@ -1141,7 +1131,6 @@ public class MainActivity extends AppCompatActivity implements DialogInterface.O
                 try{
                     photoFile = createImageFile();
                 }catch (IOException e){
-                    e.printStackTrace();
                 }
                 if(photoFile!=null){
                     Uri providerURI = FileProvider.getUriForFile(this,getPackageName(),photoFile);
@@ -1205,47 +1194,9 @@ public class MainActivity extends AppCompatActivity implements DialogInterface.O
     }
 
     public void cropImage(){//앨범선택 - 사진 자르기
-
-        Intent cropIntent = new Intent("com.android.camera.action.CROP");
-
-        cropIntent.setFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
-        cropIntent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-        cropIntent.setDataAndType(photoURI,"image/*");
-        cropIntent.putExtra("aspectX",1);
-        cropIntent.putExtra("aspectY",1);
-        cropIntent.putExtra("scale",true);
-        cropIntent.putExtra("outputX", 500);
-        cropIntent.putExtra("outputY", 500);
-        cropIntent.putExtra("output",albumURI);
-
-        startActivityForResult(cropIntent,REQUEST_IMAGE_CROP);
-
     }
 
     private void StoreImage(Context applicationContext, Uri imgUri, File photoFile) {
-        Bitmap bm = null;
-        try {
-            ExifInterface exif = new ExifInterface(mCurrentPhotoPath);
-            String exifOreientation = exif.getAttribute(ExifInterface.TAG_ORIENTATION);
-
-            BitmapFactory.Options options = new BitmapFactory.Options();
-            options.inSampleSize = 2;
-            // bm = Media.getBitmap(mContext.getContentResolver(), imageLoc);
-            bm = BitmapFactory.decodeStream(applicationContext.getContentResolver().openInputStream(imgUri), null, options);
-            FileOutputStream out = new FileOutputStream(photoFile);
-            bm.compress(Bitmap.CompressFormat.JPEG, 20, out);
-            bm.recycle();
-
-            if(exif !=null){//사진 촬영 시 회전 현상 방지
-                ExifInterface newexif = new ExifInterface(mCurrentPhotoPath);
-                newexif.setAttribute(ExifInterface.TAG_ORIENTATION,exifOreientation);
-                newexif.saveAttributes();
-            }
-
-        } catch (Exception e) {
-            e.printStackTrace();
-
-        }
     }
 
     public void imageSave(Bitmap bitmap){
@@ -1269,7 +1220,6 @@ public class MainActivity extends AppCompatActivity implements DialogInterface.O
 
             editor.commit();
         }catch (Exception e){
-            e.printStackTrace();
         }
     }
 
@@ -1416,7 +1366,6 @@ public class MainActivity extends AppCompatActivity implements DialogInterface.O
                 }
                 return true;
             } catch (Exception e) {
-                e.printStackTrace();
                 return false;
             }
         }else{
@@ -1529,7 +1478,13 @@ public class MainActivity extends AppCompatActivity implements DialogInterface.O
         String[] resultBuilder = null;
         ContentValues addData = new ContentValues();
         // 이 부분 핸드폰번호 장치에서 가져온 것으로 수정 hwang
-        addData.put("phoneNB", AppVariables.User_Phone_Number);
+        String phone = "";
+        AESEncryptor aESEncryptor = null;
+        try {
+            aESEncryptor = new AESEncryptor();
+            phone = aESEncryptor.encrypt(AppVariables.User_Phone_Number);
+        } catch (Exception e){}
+        addData.put("phoneNB", phone);
 
         NetworkTask networkTask = new NetworkTask(NetworkTask.API_MAIN_ALERT_RECEIVE, addData);
 
@@ -1542,8 +1497,6 @@ public class MainActivity extends AppCompatActivity implements DialogInterface.O
 
             }
         } catch (Exception e) {
-            e.printStackTrace();
-
         }
     }
 
@@ -1620,7 +1573,6 @@ public class MainActivity extends AppCompatActivity implements DialogInterface.O
                 }
             }
         } catch (Exception e) {
-            e.printStackTrace();
         }
     }
 
@@ -1645,7 +1597,6 @@ public class MainActivity extends AppCompatActivity implements DialogInterface.O
                 Toast.makeText(this,"턱끈 정보를 서버로 전송할 수 없습니다.", Toast.LENGTH_LONG).show();
             }
         } catch (Exception e) {
-            e.printStackTrace();
             Toast.makeText(this,"턱끈 정보를 서버로 전송할 수 없습니다.", Toast.LENGTH_LONG).show();
         }
 

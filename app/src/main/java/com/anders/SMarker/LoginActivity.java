@@ -15,6 +15,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.anders.SMarker.http.NetworkTask;
+import com.anders.SMarker.utils.AESEncryptor;
 import com.anders.SMarker.utils.AppVariables;
 import com.anders.SMarker.utils.ViewAnimation;
 import com.anders.SMarker.utils.Tools;
@@ -31,6 +32,7 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
         parent_view = findViewById(android.R.id.content);
         recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
         txtServerErrorMessage = (TextView)findViewById(R.id.txtServerErrorMessage);
@@ -67,7 +69,13 @@ public class LoginActivity extends AppCompatActivity {
             } catch(PackageManager.NameNotFoundException e) { }
 
             addData.put("version", version);
-            addData.put("phoneNB", AppVariables.User_Phone_Number);
+            String phone = "";
+            AESEncryptor aESEncryptor = null;
+            try {
+                aESEncryptor = new AESEncryptor();
+                phone = aESEncryptor.encrypt(AppVariables.User_Phone_Number);
+            } catch (Exception e){}
+            addData.put("phoneNB", phone);
             NetworkTask networkTask = new NetworkTask(NetworkTask.API_CHECK_PHONE_NUMBER, addData);
 
             try {
@@ -85,7 +93,6 @@ public class LoginActivity extends AppCompatActivity {
                     return false;
                 }
             } catch (Exception e) {
-                e.printStackTrace();
                 return false;
             }
         //}else{

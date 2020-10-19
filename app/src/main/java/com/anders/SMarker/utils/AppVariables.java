@@ -129,7 +129,6 @@ public class AppVariables {
             emerAlarm = soundPoolEmer.load(context, R.raw.notifyalarm,1);
             normalAlarm = soundPoolNormal.load(context, R.raw.message,1);
         }catch (Exception e){
-            e.printStackTrace();
         }
 
     }

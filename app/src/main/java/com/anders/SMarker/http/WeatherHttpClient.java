@@ -38,7 +38,6 @@ public class WeatherHttpClient{
             return buffer.toString();
         }
         catch(Throwable t) {
-            t.printStackTrace();
         }
         finally {
             try { is.close(); } catch(Throwable t) {}

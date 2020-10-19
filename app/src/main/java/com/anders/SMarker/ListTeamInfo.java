@@ -25,6 +25,7 @@ import android.widget.Toast;
 import com.anders.SMarker.adapter.AdapterTeamList;
 import com.anders.SMarker.http.NetworkTask;
 import com.anders.SMarker.model.TeamList;
+import com.anders.SMarker.utils.AESEncryptor;
 import com.anders.SMarker.utils.AlarmDlg;
 import com.anders.SMarker.utils.AppVariables;
 import com.anders.SMarker.utils.BottomNavigationViewHelper;
@@ -102,7 +103,6 @@ public class ListTeamInfo extends AppCompatActivity {
                                 mAdapter.setStateChange(user_idx, helmet_state);
                             }
                         } catch (JSONException e) {
-                            e.printStackTrace();
                         }
                     }
                 });
@@ -228,7 +228,13 @@ public class ListTeamInfo extends AppCompatActivity {
         int itemTotalCount = recyclerView.getAdapter().getItemCount();
         if (lastVisibleItemPosition == itemTotalCount - 1) {
             ContentValues addData = new ContentValues();
-            addData.put("phoneNB", AppVariables.User_Phone_Number);
+            String phone = "";
+            AESEncryptor aESEncryptor = null;
+            try {
+                aESEncryptor = new AESEncryptor();
+                phone = aESEncryptor.encrypt(AppVariables.User_Phone_Number);
+            } catch (Exception e){}
+            addData.put("phoneNB", phone);
             addData.put("serverURL", NetworkTask.API_SERVER_ADRESS);
             addData.put("offset", itemTotalCount);
             NetworkTask networkTask = new NetworkTask(NetworkTask.API_TEAM_LIST_PAGE, addData);
@@ -280,8 +286,6 @@ public class ListTeamInfo extends AppCompatActivity {
                 }else{
                 }
             } catch (Exception e) {
-                e.printStackTrace();
-
             }
         }
         }
@@ -382,7 +386,13 @@ public class ListTeamInfo extends AppCompatActivity {
     private void teamListView()
     {
         ContentValues addData = new ContentValues();
-        addData.put("phoneNB", AppVariables.User_Phone_Number);
+        String phone = "";
+        AESEncryptor aESEncryptor = null;
+        try {
+            aESEncryptor = new AESEncryptor();
+            phone = aESEncryptor.encrypt(AppVariables.User_Phone_Number);
+        } catch (Exception e){}
+        addData.put("phoneNB", phone);
         addData.put("serverURL", NetworkTask.API_SERVER_ADRESS);
         addData.put("offset", 0);
         NetworkTask networkTask = new NetworkTask(NetworkTask.API_TEAM_LIST_PAGE, addData);
@@ -395,8 +405,6 @@ public class ListTeamInfo extends AppCompatActivity {
 
             }
         } catch (Exception e) {
-            e.printStackTrace();
-
         }
     }
 

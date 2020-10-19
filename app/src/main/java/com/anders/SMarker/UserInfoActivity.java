@@ -328,7 +328,6 @@ public class UserInfoActivity extends AppCompatActivity {
                 try{
                     photoFile = createImageFile();
                 }catch (IOException e){
-                    e.printStackTrace();
                 }
                 if(photoFile!=null){
                     Uri providerURI = FileProvider.getUriForFile(this,getPackageName(),photoFile);
@@ -424,8 +423,6 @@ public class UserInfoActivity extends AppCompatActivity {
                         cropImage();
 
                     }catch (Exception e){
-                        e.printStackTrace();
-
                     }
                 }
                 break;
@@ -455,7 +452,6 @@ public class UserInfoActivity extends AppCompatActivity {
                     }
 
                 }catch (Exception e){
-                    e.printStackTrace();
                 }
                 break;
             }
@@ -480,7 +476,6 @@ public class UserInfoActivity extends AppCompatActivity {
                         }).start();
                     }
                 }catch (Exception e){
-                    e.printStackTrace();
                 }
                 break;
             }
@@ -489,30 +484,8 @@ public class UserInfoActivity extends AppCompatActivity {
     }
 
     private void StoreImage(Context applicationContext, Uri imgUri, File photoFile) {
-        Bitmap bm = null;
-        try {
-            ExifInterface exif = new ExifInterface(mCurrentPhotoPath);
-            String exifOreientation = exif.getAttribute(ExifInterface.TAG_ORIENTATION);
-
-            BitmapFactory.Options options = new BitmapFactory.Options();
-            options.inSampleSize = 2;
-            // bm = Media.getBitmap(mContext.getContentResolver(), imageLoc);
-            bm = BitmapFactory.decodeStream(applicationContext.getContentResolver().openInputStream(imgUri), null, options);
-            FileOutputStream out = new FileOutputStream(photoFile);
-            bm.compress(Bitmap.CompressFormat.JPEG, 20, out);
-            bm.recycle();
-
-            if(exif !=null){//사진 촬영 시 회전 현상 방지
-                ExifInterface newexif = new ExifInterface(mCurrentPhotoPath);
-                newexif.setAttribute(ExifInterface.TAG_ORIENTATION,exifOreientation);
-                newexif.saveAttributes();
-            }
-
-        } catch (Exception e) {
-            e.printStackTrace();
-
-        }
     }
+
     public void imageSave(Bitmap bitmap){
         try {
 
@@ -533,26 +506,10 @@ public class UserInfoActivity extends AppCompatActivity {
 
             editor.commit();
         }catch (Exception e){
-            e.printStackTrace();
         }
     }
 
     public void cropImage(){//앨범선택 - 사진 자르기
-
-        Intent cropIntent = new Intent("com.android.camera.action.CROP");
-
-        cropIntent.setFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
-        cropIntent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-        cropIntent.setDataAndType(photoURI,"image/*");
-        cropIntent.putExtra("aspectX",1);
-        cropIntent.putExtra("aspectY",1);
-        cropIntent.putExtra("scale",true);
-        cropIntent.putExtra("outputX", 500);
-        cropIntent.putExtra("outputY", 500);
-        cropIntent.putExtra("output",albumURI);
-
-        startActivityForResult(cropIntent,REQUEST_IMAGE_CROP);
-
     }
 
 
@@ -646,7 +603,6 @@ public class UserInfoActivity extends AppCompatActivity {
                 dos.flush();
                 dos.close();
             } catch (MalformedURLException ex) {
-                ex.printStackTrace();
                 runOnUiThread(new Runnable() {
                     public void run() {
                         Toast.makeText(UserInfoActivity.this, "연결 실패되었습니다.", Toast.LENGTH_SHORT).show();
@@ -654,7 +610,6 @@ public class UserInfoActivity extends AppCompatActivity {
                 });
 
             } catch (Exception e) {
-                e.printStackTrace();
                 runOnUiThread(new Runnable() {
                     public void run() {
                         //Toast.makeText(UserInfoActivity.this, "저장 오류가 발생했습니다. ", Toast.LENGTH_SHORT).show();

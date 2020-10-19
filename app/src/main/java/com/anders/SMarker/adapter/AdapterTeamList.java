@@ -109,7 +109,6 @@ public class AdapterTeamList extends RecyclerView.Adapter<AdapterTeamList.ViewHo
             holder.userImage.setClipToOutline(true);
 
         } catch (Exception e) {
-            e.printStackTrace();
 
         }
 

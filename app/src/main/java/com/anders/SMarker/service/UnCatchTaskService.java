@@ -41,7 +41,6 @@ public class UnCatchTaskService extends Service {
                 }
             }
         } catch (Exception e) {
-            e.printStackTrace();
         }
     }
 }

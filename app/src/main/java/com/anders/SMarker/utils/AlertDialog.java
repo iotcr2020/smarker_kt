@@ -149,8 +149,6 @@ public class AlertDialog extends AppCompatActivity {
 
                                 finish();
                             } catch (Exception e) {
-
-                                e.printStackTrace();
                                 finish();
 
                             }
@@ -213,7 +211,6 @@ public class AlertDialog extends AppCompatActivity {
                         networkTask.execute().get();
                         //Log.d("현재 위치 주소 = " , address);
                     } catch (Exception e) {
-                        e.printStackTrace();
                         finish();
                         isShowState = false;
                     }

@@ -37,6 +37,7 @@ import android.support.annotation.RequiresApi;
 
 import com.anders.SMarker.fcm.FirebaseInstanceIDService;
 import com.anders.SMarker.http.NetworkTask;
+import com.anders.SMarker.utils.AESEncryptor;
 import com.anders.SMarker.utils.AlarmDlg;
 import com.anders.SMarker.utils.AppVariables;
 import com.anders.SMarker.utils.Tools;
@@ -240,7 +241,13 @@ public class ConnectActivity extends AppCompatActivity {
     private void sendToServerStripMacAdress(){
         String[] resultBuilder = null;
         ContentValues addData = new ContentValues();
-        addData.put("phoneNB", AppVariables.User_Phone_Number);
+        String phone = "";
+        AESEncryptor aESEncryptor = null;
+        try {
+            aESEncryptor = new AESEncryptor();
+            phone = aESEncryptor.encrypt(AppVariables.User_Phone_Number);
+        } catch (Exception e){}
+        addData.put("phoneNB", phone);
         addData.put("stripMAC", AppVariables.Strip_Mac_Adress);
         NetworkTask networkTask = new NetworkTask(NetworkTask.API_UPDATE_USER_STRIP_MAC, addData);
         Log.i("UPDATE==>","Strip Mac");
@@ -253,14 +260,19 @@ public class ConnectActivity extends AppCompatActivity {
                 }
             }
         } catch (Exception e) {
-            e.printStackTrace();
         }
     }
 
     private void sendToServerHelmetMacAdress(){
         String[] resultBuilder = null;
         ContentValues addData = new ContentValues();
-        addData.put("phoneNB", AppVariables.User_Phone_Number);
+        String phone = "";
+        AESEncryptor aESEncryptor = null;
+        try {
+            aESEncryptor = new AESEncryptor();
+            phone = aESEncryptor.encrypt(AppVariables.User_Phone_Number);
+        } catch (Exception e){}
+        addData.put("phoneNB", phone);
         addData.put("helmetMAC", AppVariables.Helmet_Mac_Adress);
         NetworkTask networkTask = new NetworkTask(NetworkTask.API_UPDATE_USER_Helmet_MAC, addData);
 
@@ -274,7 +286,6 @@ public class ConnectActivity extends AppCompatActivity {
                 }
             }
         } catch (Exception e) {
-            e.printStackTrace();
         }
     }
 
@@ -583,7 +594,6 @@ public class ConnectActivity extends AppCompatActivity {
                 }
             }
         } catch (Exception e) {
-            e.printStackTrace();
         }
     }
 

@@ -18,6 +18,7 @@ import android.widget.Toast;
 import android.support.v7.app.AlertDialog;
 
 import com.anders.SMarker.http.NetworkTask;
+import com.anders.SMarker.utils.AESEncryptor;
 import com.anders.SMarker.utils.AppVariables;
 
 public class AgreeActivity extends AppCompatActivity {
@@ -66,7 +67,13 @@ public class AgreeActivity extends AppCompatActivity {
         if (AppVariables.User_Phone_Number.length() !=0){
             String[] resultBuilder = null;
             ContentValues addData = new ContentValues();
-            addData.put("phoneNB", AppVariables.User_Phone_Number);
+            String phone = "";
+            AESEncryptor aESEncryptor = null;
+            try {
+                aESEncryptor = new AESEncryptor();
+                phone = aESEncryptor.encrypt(AppVariables.User_Phone_Number);
+            } catch (Exception e){}
+            addData.put("phoneNB", phone);
             NetworkTask networkTask = new NetworkTask(NetworkTask.API_UPDATE_AGREE, addData);
 
             try {
@@ -82,7 +89,6 @@ public class AgreeActivity extends AppCompatActivity {
                     showRetryDialog("EMPTY");
                 }
             } catch (Exception e) {
-                e.printStackTrace();
                 showRetryDialog("EXCEPTION");
             }
         }else{

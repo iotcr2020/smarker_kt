@@ -25,6 +25,7 @@ import android.widget.TextView;
 
 import com.anders.SMarker.http.NetworkTask;
 import com.anders.SMarker.service.BleService;
+import com.anders.SMarker.utils.AESEncryptor;
 import com.anders.SMarker.utils.AlarmDlg;
 import com.anders.SMarker.utils.AppVariables;
 import com.anders.SMarker.utils.Tools;
@@ -132,21 +133,32 @@ public class SettingActivity extends AppCompatActivity implements CompoundButton
     private void sendWorkFl(String Work_fl) {
         ContentValues addData = new ContentValues();
         // 이 부분 핸드폰번호 장치에서 가져온 것으로 수정 hwang
-        addData.put("phoneNB", AppVariables.User_Phone_Number);
+        String phone = "";
+        AESEncryptor aESEncryptor = null;
+        try {
+            aESEncryptor = new AESEncryptor();
+            phone = aESEncryptor.encrypt(AppVariables.User_Phone_Number);
+        } catch (Exception e){}
+        addData.put("phoneNB", phone);
         addData.put("workFl", Work_fl);
         NetworkTask networkTask = new NetworkTask(NetworkTask.API_WORK_FL, addData);
 
         try {
             networkTask.execute().get();
         } catch (Exception e) {
-            e.printStackTrace();
         }
     }
 
     private void getWorkFl() {
         ContentValues addData = new ContentValues();
         // 이 부분 핸드폰번호 장치에서 가져온 것으로 수정 hwang
-        addData.put("phoneNB", AppVariables.User_Phone_Number);
+        String phone = "";
+        AESEncryptor aESEncryptor = null;
+        try {
+            aESEncryptor = new AESEncryptor();
+            phone = aESEncryptor.encrypt(AppVariables.User_Phone_Number);
+        } catch (Exception e){}
+        addData.put("phoneNB", phone);
         NetworkTask networkTask = new NetworkTask(NetworkTask.API_GET_WORK_FL, addData);
 
         try {
@@ -157,7 +169,6 @@ public class SettingActivity extends AppCompatActivity implements CompoundButton
                 SwitchWork.setOnCheckedChangeListener( this );
             }
         } catch (Exception e) {
-            e.printStackTrace();
         }
     }
 

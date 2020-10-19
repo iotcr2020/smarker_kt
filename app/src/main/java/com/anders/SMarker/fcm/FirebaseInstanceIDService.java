@@ -66,9 +66,6 @@ public class FirebaseInstanceIDService extends FirebaseInstanceIdService {
             try {
                 networkTask.execute().get();
             } catch (Exception e) {
-
-                e.printStackTrace();
-
             }
         }
 

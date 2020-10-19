@@ -29,6 +29,7 @@ import android.widget.Toast;
 import com.anders.SMarker.fcm.FirebaseInstanceIDService;
 import com.anders.SMarker.http.NetworkTask;
 import com.anders.SMarker.service.UnCatchTaskService;
+import com.anders.SMarker.utils.AESEncryptor;
 import com.anders.SMarker.utils.AppVariables;
 import com.anders.SMarker.utils.ServiceUtils;
 import com.google.firebase.iid.FirebaseInstanceId;
@@ -81,7 +82,6 @@ public class SplashActivity extends Activity {
                     }
 
                 } catch (Exception ignored) {
-                    ignored.printStackTrace();
                 }
             }
         }, 3000);
@@ -190,9 +190,7 @@ public class SplashActivity extends Activity {
                 AppVariables.User_Phone_Number = mPhoneNumber;
             }
         }
-        catch(Exception e)
-        {
-            e.printStackTrace();
+        catch(Exception e) {
         }
     }
 
@@ -239,7 +237,13 @@ public class SplashActivity extends Activity {
         //if(permission && AppVariables.getConnectivityStatus(getApplicationContext()) != AppVariables.TYPE_NOT_CONNECTED) {
             String[] resultBuilder = null;
             ContentValues addData = new ContentValues();
-            addData.put("phoneNB", AppVariables.User_Phone_Number);
+            String phone = "";
+            AESEncryptor aESEncryptor = null;
+            try {
+                aESEncryptor = new AESEncryptor();
+                phone = aESEncryptor.encrypt(AppVariables.User_Phone_Number);
+            } catch (Exception e){}
+            addData.put("phoneNB", phone);
             String connFl = "n";
 
             Log.i("-----------휴대폰번호----------->", AppVariables.User_Phone_Number);
@@ -278,7 +282,6 @@ public class SplashActivity extends Activity {
                     startAgreeActivity();
                 }
             } catch (Exception e) {
-                e.printStackTrace();
             }
 
             if ("n".equals(connFl)) {

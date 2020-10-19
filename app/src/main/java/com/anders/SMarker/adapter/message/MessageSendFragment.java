@@ -16,6 +16,7 @@ import android.widget.LinearLayout;
 import com.anders.SMarker.R;
 import com.anders.SMarker.http.NetworkTask;
 import com.anders.SMarker.model.MessageList;
+import com.anders.SMarker.utils.AESEncryptor;
 import com.anders.SMarker.utils.AppVariables;
 import com.anders.SMarker.widget.LineItemDecoration;
 
@@ -101,7 +102,13 @@ public class MessageSendFragment extends Fragment {
         String[] resultBuilder = null;
         ContentValues addData = new ContentValues();
         // 이 부분 핸드폰번호 장치에서 가져온 것으로 수정 hwang
-        addData.put("phoneNB", AppVariables.User_Phone_Number);
+        String phone = "";
+        AESEncryptor aESEncryptor = null;
+        try {
+            aESEncryptor = new AESEncryptor();
+            phone = aESEncryptor.encrypt(AppVariables.User_Phone_Number);
+        } catch (Exception e){}
+        addData.put("phoneNB", phone);
 
 
         NetworkTask networkTask = new NetworkTask(NetworkTask.API_MESSAGE_SEND_LIST, addData);
@@ -116,7 +123,6 @@ public class MessageSendFragment extends Fragment {
 
             }
         } catch (Exception e) {
-            e.printStackTrace();
 
         }
     }

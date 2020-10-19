@@ -62,7 +62,6 @@ public class JSONWeatherParser {
                 dtEntry.end_date = dateFormat.format(cal.getTime());
 
             } catch (ParseException e) {
-                e.printStackTrace();
             }
 
 

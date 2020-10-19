@@ -7,8 +7,8 @@ android {
         applicationId "com.anders.SMarker"
         minSdkVersion 24
         targetSdkVersion 28
-        versionCode 120
-        versionName "3.00"
+        versionCode 122
+        versionName "3.10"
         multiDexEnabled true
         vectorDrawables.useSupportLibrary = true
     }

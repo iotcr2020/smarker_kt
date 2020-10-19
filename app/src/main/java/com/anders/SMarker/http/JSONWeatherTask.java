@@ -27,7 +27,6 @@ public class JSONWeatherTask extends AsyncTask<String, Void, ArrayList> {
 
 
         } catch (JSONException e) {
-            e.printStackTrace();
         }
         return arrayList;
 

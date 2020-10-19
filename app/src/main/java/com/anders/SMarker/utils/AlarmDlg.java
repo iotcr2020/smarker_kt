@@ -121,10 +121,7 @@ public class AlarmDlg extends AppCompatActivity {
                             //Log.d("현재 위치 주소 = " , address);
                             dialog.dismiss();
                         } catch (Exception e ) {
-
-                            e.printStackTrace();
                             dialog.dismiss();
-
                         }
                     }
                 }.start();
@@ -357,8 +354,6 @@ public class AlarmDlg extends AppCompatActivity {
                         ListTeamInfo.actionMode.finish();
 
                     } catch (Exception e ) {
-
-                        e.printStackTrace();
                         dialog.dismiss();
                         Toast.makeText(context, "메세지 전송이 실패됐습니다. 다시 전송하세요.", Toast.LENGTH_LONG).show();
                         ListTeamInfo.mAdapter.clearSelections();

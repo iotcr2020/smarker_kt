@@ -94,7 +94,6 @@ public class Tools {
             );
             return newUri.toString();
         } catch (Exception e) {
-            e.printStackTrace();
             return uri;
         }
     }
@@ -106,7 +105,6 @@ public class Tools {
             if (!new_url.startsWith("www.")) new_url = "www." + new_url;
             return new_url;
         } catch (URISyntaxException e) {
-            e.printStackTrace();
             return url;
         }
     }

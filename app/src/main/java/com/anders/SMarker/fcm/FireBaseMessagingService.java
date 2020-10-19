@@ -125,9 +125,6 @@ public class FireBaseMessagingService extends FirebaseMessagingService {
             try {
                 networkTask.execute().get();
             } catch (Exception e) {
-
-                e.printStackTrace();
-
             }
         }
 

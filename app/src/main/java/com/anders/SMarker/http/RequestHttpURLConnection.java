@@ -101,9 +101,7 @@ public class RequestHttpURLConnection {
             return page;
 
         } catch (MalformedURLException e) { // for URL.
-            e.printStackTrace();
         } catch (IOException e) { // for openConnection().
-            e.printStackTrace();
         } finally {
             if (urlConn != null)
                 urlConn.disconnect();
