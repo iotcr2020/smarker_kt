@@ -85,6 +85,10 @@
             android:screenOrientation="portrait" />
 
         <activity
+            android:name=".TeamActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
             android:name=".ListTeamInfo"
             android:enabled="true" />
 

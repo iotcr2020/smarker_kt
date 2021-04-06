@@ -3,6 +3,7 @@ package com.anders.SMarker;
 import android.Manifest;
 import android.app.Activity;
 import android.app.Dialog;
+import android.app.NotificationManager;
 import android.content.BroadcastReceiver;
 import android.content.ComponentName;
 import android.content.ContentValues;
@@ -39,6 +40,7 @@ import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.text.Html;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.Gravity;
@@ -87,6 +89,7 @@ import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -96,7 +99,7 @@ import java.util.TimerTask;
 import java.util.UUID;
 
 public class MainActivity extends AppCompatActivity implements DialogInterface.OnDismissListener{
-
+    int NOTI_ID = 1653422;
     private ImageView imgFamilyPhoto;
     private Button btnStartStop;
     private Button btnGoConnect;
@@ -151,6 +154,9 @@ public class MainActivity extends AppCompatActivity implements DialogInterface.O
     private boolean isService = false;
 
     public static BottomNavigationView navigation;
+
+    String stripText = "<font color='#EF5350'>미착용</font>";
+    String batterryText = "미접속";
 
     private static final long MIN_CLICK_INTERVAL = 1500;
     private long mLastClickTime;
@@ -492,27 +498,37 @@ public class MainActivity extends AppCompatActivity implements DialogInterface.O
                                         if (smode.equals("1") || smode.equals("2") || smode.equals("3")) {
                                             imgStripTop.setImageDrawable(getResources().getDrawable(R.drawable.circle_top));
                                             imgStripBottom.setImageDrawable(getResources().getDrawable(R.drawable.circle_bottom));
+                                            stripText = "<font color='#2cbbb6'>착용중</font>";
                                         } else {
                                             imgStripTop.setImageDrawable(getResources().getDrawable( R.drawable.circle_top_off));
                                             imgStripBottom.setImageDrawable(getResources().getDrawable(R.drawable.circle_bottom_off));
                                             imgStripBottom.setImageResource(R.drawable.circle_bottom_off);
+                                            stripText = "<font color='#EF5350'>미착용</font>";
                                         }
                                     } else {
                                         if(smode.equals("1")) {
                                             imgStripTop.setImageDrawable(getResources().getDrawable(R.drawable.circle_top));
                                             imgStripBottom.setImageDrawable(getResources().getDrawable(R.drawable.circle_bottom_off));
+                                            stripText = "<font color='#2cbbb6'>착용중</font>";
                                         }else if(smode.equals("2")){
                                             imgStripTop.setImageDrawable(getResources().getDrawable(R.drawable.circle_top_off));
                                             imgStripBottom.setImageDrawable(getResources().getDrawable(R.drawable.circle_bottom));
+                                            stripText = "<font color='#2cbbb6'>착용중</font>";
                                         }else if(smode.equals("3")){
                                             imgStripTop.setImageDrawable(getResources().getDrawable(R.drawable.circle_top));
                                             imgStripBottom.setImageDrawable(getResources().getDrawable(R.drawable.circle_bottom));
+                                            stripText = "<font color='#2cbbb6'>착용중</font>";
                                         }else{
                                             imgStripTop.setImageDrawable(getResources().getDrawable( R.drawable.circle_top_off));
                                             imgStripBottom.setImageDrawable(getResources().getDrawable(R.drawable.circle_bottom_off));
                                             imgStripBottom.setImageResource(R.drawable.circle_bottom_off);
+                                            stripText = "<font color='#EF5350'>미착용</font>";
                                         }
                                     }
+
+                                    NotificationManager notificationManager = getSystemService(NotificationManager.class);
+                                    BleService.notificationBuilder.setSubText(Html.fromHtml(batterryText + "&nbsp;&nbsp;" + stripText));
+                                    notificationManager.notify(NOTI_ID, BleService.notificationBuilder.build());
                                 }
 
                                 if (!TextUtils.isEmpty(smode)) {
@@ -569,6 +585,8 @@ public class MainActivity extends AppCompatActivity implements DialogInterface.O
             mBleService.bExeThread = false;
             String action = intent.getAction();
 
+            NotificationManager notificationManager = getSystemService(NotificationManager.class);
+
             if (AppVariables.EXTRA_SERVICE_BATTERY_INFO_HELMET.equals(intent.getStringExtra("action"))
                 || "com.anders.SMarker.ACTION_GATT_DISCONNECTED.HELMET".equals(intent.getStringExtra("action"))) {
                 String sHelmetBattery = intent.getStringExtra(AppVariables.EXTRA_SERVICE_BATTERY_INFO_HELMET);
@@ -588,6 +606,11 @@ public class MainActivity extends AppCompatActivity implements DialogInterface.O
                     }
                     Button_Find_Helmet.setVisibility(View.VISIBLE);
                     Log.i("최종 헬맷 배터리===>", Integer.toString(AppVariables.iHelmetBatteryAmount));
+
+                    batterryText = Integer.toString(AppVariables.iStripBatteryAmmount) + "%";
+                    BleService.notificationBuilder.setSubText(Html.fromHtml(batterryText + "&nbsp;&nbsp;" + stripText));
+                    notificationManager.notify(NOTI_ID, BleService.notificationBuilder.build());
+
                     if (AppVariables.iHelmetBatteryAmountFlag == -1) {
                         batteryAlarm(AppVariables.iHelmetBatteryAmount, "helmet");
                     }
@@ -618,8 +641,25 @@ public class MainActivity extends AppCompatActivity implements DialogInterface.O
                     Button_Find_Strip.setVisibility(View.VISIBLE);
                     Log.i("최종 턱끈 배터리===>", Integer.toString(AppVariables.iStripBatteryAmmount));
 
+                    batterryText = Integer.toString(AppVariables.iStripBatteryAmmount) + "%";
+                    BleService.notificationBuilder.setSubText(Html.fromHtml(batterryText + "&nbsp;&nbsp;" + stripText));
+                    notificationManager.notify(NOTI_ID, BleService.notificationBuilder.build());
+
                     if (AppVariables.iStripBatteryAmmountFlag == -1) {
                         batteryAlarm(AppVariables.iStripBatteryAmmount, "strip");
+                    }
+
+                    try {
+                        ContentValues addData = new ContentValues();
+                        addData.put("USER_IDX", Integer.parseInt(AppVariables.User_Idx));
+                        addData.put("battery", AppVariables.iStripBatteryAmmount);
+                        NetworkTask networkTask = new NetworkTask(NetworkTask.API_BATTERY_INFO, addData);
+                        String result =  networkTask.execute().get();
+                        if (result != null && !result.isEmpty()) {
+                            receiveString = result;
+                        } else { }
+                    } catch (Exception e) {
+                        e.printStackTrace();
                     }
                 } else {
                     imgStripBattery.setImageDrawable(getResources().getDrawable(R.drawable.not_connect));
@@ -1402,10 +1442,10 @@ public class MainActivity extends AppCompatActivity implements DialogInterface.O
         icon_set.setColorFilter(getResources().getColor(R.color.mainColor), PorterDuff.Mode.SRC_IN);
         item_set.setIcon(icon_set);
 
-        if(AppVariables.User_Permission.equals("Y")){
-            //MenuItem item_p = menu.findItem(R.id.bottom_team);
-            //item_p.setVisible(true);
-        }
+        /*if(AppVariables.User_Permission.equals("Y")){
+            MenuItem item_p = menu.findItem(R.id.bottom_team);
+            item_p.setVisible(true);
+        }*/
 
         return true;
     }
@@ -1484,7 +1524,7 @@ public class MainActivity extends AppCompatActivity implements DialogInterface.O
             aESEncryptor = new AESEncryptor();
             phone = aESEncryptor.encrypt(AppVariables.User_Phone_Number);
         } catch (Exception e){}
-        addData.put("phoneNB", phone);
+        addData.put("phoneNB", URLEncoder.encode(phone));
 
         NetworkTask networkTask = new NetworkTask(NetworkTask.API_MAIN_ALERT_RECEIVE, addData);
 

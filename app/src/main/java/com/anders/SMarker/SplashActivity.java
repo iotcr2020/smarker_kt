@@ -36,6 +36,7 @@ import com.google.firebase.iid.FirebaseInstanceId;
 import com.gun0912.tedpermission.PermissionListener;
 import com.gun0912.tedpermission.TedPermission;
 
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -243,7 +244,7 @@ public class SplashActivity extends Activity {
                 aESEncryptor = new AESEncryptor();
                 phone = aESEncryptor.encrypt(AppVariables.User_Phone_Number);
             } catch (Exception e){}
-            addData.put("phoneNB", phone);
+            addData.put("phoneNB", URLEncoder.encode(phone));
             String connFl = "n";
 
             Log.i("-----------휴대폰번호----------->", AppVariables.User_Phone_Number);

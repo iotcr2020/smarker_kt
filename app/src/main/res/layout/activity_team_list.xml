@@ -31,15 +31,39 @@
                 android:layout_alignParentBottom="true"
                 android:background="@color/mainColor" />
 
-            <CheckBox
-                android:id="@+id/teamchk"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/spacing_mlarge"
-                android:checked="false"
-                android:paddingTop="@dimen/spacing_middle"
-                android:paddingBottom="@dimen/spacing_middle"
-                android:text="전체선택" />
+                android:paddingTop="@dimen/spacing_medium"
+                android:paddingBottom="@dimen/spacing_medium"
+                android:orientation="horizontal">
+
+                <CheckBox
+                    android:id="@+id/teamchk"
+                    android:layout_width="200dp"
+                    android:layout_height="50dp"
+                    android:layout_marginLeft="@dimen/spacing_mlarge"
+                    android:checked="false"
+                    android:text="전체선택" />
+
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"/>
+
+                <Button
+                    android:id="@+id/teamListButton"
+                    android:layout_width="64dp"
+                    android:layout_height="32dp"
+                    android:layout_marginRight="@dimen/spacing_mlarge"
+                    android:layout_gravity="center_vertical|right"
+                    android:background="@color/mainColor"
+                    android:gravity="center"
+                    android:textColor="#ffffff"
+                    android:textSize="15dp"
+                    android:textStyle="bold"
+                    android:text="조직도"/>
+            </LinearLayout>
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/recyclerView"

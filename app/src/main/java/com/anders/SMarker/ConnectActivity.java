@@ -43,6 +43,7 @@ import com.anders.SMarker.utils.AppVariables;
 import com.anders.SMarker.utils.Tools;
 import com.google.firebase.iid.FirebaseInstanceId;
 
+import java.net.URLEncoder;
 import java.util.List;
 
 public class ConnectActivity extends AppCompatActivity {
@@ -247,7 +248,7 @@ public class ConnectActivity extends AppCompatActivity {
             aESEncryptor = new AESEncryptor();
             phone = aESEncryptor.encrypt(AppVariables.User_Phone_Number);
         } catch (Exception e){}
-        addData.put("phoneNB", phone);
+        addData.put("phoneNB", URLEncoder.encode(phone));
         addData.put("stripMAC", AppVariables.Strip_Mac_Adress);
         NetworkTask networkTask = new NetworkTask(NetworkTask.API_UPDATE_USER_STRIP_MAC, addData);
         Log.i("UPDATE==>","Strip Mac");
@@ -272,7 +273,7 @@ public class ConnectActivity extends AppCompatActivity {
             aESEncryptor = new AESEncryptor();
             phone = aESEncryptor.encrypt(AppVariables.User_Phone_Number);
         } catch (Exception e){}
-        addData.put("phoneNB", phone);
+        addData.put("phoneNB", URLEncoder.encode(phone));
         addData.put("helmetMAC", AppVariables.Helmet_Mac_Adress);
         NetworkTask networkTask = new NetworkTask(NetworkTask.API_UPDATE_USER_Helmet_MAC, addData);
 

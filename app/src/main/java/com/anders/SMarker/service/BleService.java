@@ -47,7 +47,7 @@ import java.util.TimerTask;
 
 
 public class BleService extends Service {
-
+    public static NotificationCompat.Builder notificationBuilder;
     public static BleService instance;
     public static int mainChkMode = 0;
     public static int mainsMode = 0;
@@ -945,7 +945,7 @@ public class BleService extends Service {
         assert manager != null;
         manager.createNotificationChannel(chan);
 
-        NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this, NOTIFICATION_CHANNEL_ID);
+        notificationBuilder = new NotificationCompat.Builder(this, NOTIFICATION_CHANNEL_ID);
         Notification notification = notificationBuilder.setOngoing(true)
                 .setSmallIcon(R.mipmap.ic_launcher)
                 .setContentTitle(getString(R.string.app_name))

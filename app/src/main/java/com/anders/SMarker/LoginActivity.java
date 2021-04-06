@@ -20,6 +20,8 @@ import com.anders.SMarker.utils.AppVariables;
 import com.anders.SMarker.utils.ViewAnimation;
 import com.anders.SMarker.utils.Tools;
 
+import java.net.URLEncoder;
+
 public class LoginActivity extends AppCompatActivity {
 
     private View parent_view;
@@ -75,7 +77,7 @@ public class LoginActivity extends AppCompatActivity {
                 aESEncryptor = new AESEncryptor();
                 phone = aESEncryptor.encrypt(AppVariables.User_Phone_Number);
             } catch (Exception e){}
-            addData.put("phoneNB", phone);
+            addData.put("phoneNB", URLEncoder.encode(phone));
             NetworkTask networkTask = new NetworkTask(NetworkTask.API_CHECK_PHONE_NUMBER, addData);
 
             try {

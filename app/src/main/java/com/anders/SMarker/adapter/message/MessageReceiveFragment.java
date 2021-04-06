@@ -26,6 +26,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.Iterator;
 
@@ -173,7 +174,7 @@ public class MessageReceiveFragment extends Fragment {
             aESEncryptor = new AESEncryptor();
             phone = aESEncryptor.encrypt(AppVariables.User_Phone_Number);
         } catch (Exception e){}
-        addData.put("phoneNB", phone);
+        addData.put("phoneNB", URLEncoder.encode(phone));
 
         NetworkTask networkTask = new NetworkTask(NetworkTask.API_MESSAGE_RECEIVE_LIST, addData);
 

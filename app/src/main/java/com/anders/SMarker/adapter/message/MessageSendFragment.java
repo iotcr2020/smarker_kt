@@ -24,6 +24,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.net.URLEncoder;
 import java.util.ArrayList;
 
 public class MessageSendFragment extends Fragment {
@@ -108,8 +109,7 @@ public class MessageSendFragment extends Fragment {
             aESEncryptor = new AESEncryptor();
             phone = aESEncryptor.encrypt(AppVariables.User_Phone_Number);
         } catch (Exception e){}
-        addData.put("phoneNB", phone);
-
+        addData.put("phoneNB", URLEncoder.encode(phone));
 
         NetworkTask networkTask = new NetworkTask(NetworkTask.API_MESSAGE_SEND_LIST, addData);
 

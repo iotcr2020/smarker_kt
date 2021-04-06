@@ -167,10 +167,10 @@ public class MessageListActivity extends AppCompatActivity {
         icon_set.setColorFilter(getResources().getColor(R.color.mainColor), PorterDuff.Mode.SRC_IN);
         item_set.setIcon(icon_set);
 
-        if(AppVariables.User_Permission.equals("Y")){
-           // MenuItem item_p = menu.findItem(R.id.bottom_team);
-           // item_p.setVisible(true);
-        }
+        /*if(AppVariables.User_Permission.equals("Y")){
+           MenuItem item_p = menu.findItem(R.id.bottom_team);
+           item_p.setVisible(true);
+        }*/
 
         return true;
     }

@@ -21,6 +21,8 @@ import com.anders.SMarker.http.NetworkTask;
 import com.anders.SMarker.utils.AESEncryptor;
 import com.anders.SMarker.utils.AppVariables;
 
+import java.net.URLEncoder;
+
 public class AgreeActivity extends AppCompatActivity {
 
     private final  int PERMISSIONS_REQUEST_READ_PHONE_STATE  = 0;
@@ -73,7 +75,7 @@ public class AgreeActivity extends AppCompatActivity {
                 aESEncryptor = new AESEncryptor();
                 phone = aESEncryptor.encrypt(AppVariables.User_Phone_Number);
             } catch (Exception e){}
-            addData.put("phoneNB", phone);
+            addData.put("phoneNB", URLEncoder.encode(phone));
             NetworkTask networkTask = new NetworkTask(NetworkTask.API_UPDATE_AGREE, addData);
 
             try {

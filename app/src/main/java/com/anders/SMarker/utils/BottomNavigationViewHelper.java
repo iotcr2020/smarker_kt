@@ -6,6 +6,9 @@ import android.support.design.internal.BottomNavigationItemView;
 import android.support.design.internal.BottomNavigationMenuView;
 import android.support.design.widget.BottomNavigationView;
 import android.util.Log;
+import android.view.View;
+
+import com.anders.SMarker.R;
 
 import java.lang.reflect.Field;
 

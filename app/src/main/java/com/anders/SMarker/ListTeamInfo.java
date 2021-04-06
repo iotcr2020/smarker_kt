@@ -17,6 +17,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.LinearLayout;
@@ -36,6 +37,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Timer;
@@ -49,6 +51,7 @@ public class ListTeamInfo extends AppCompatActivity {
 
     private RecyclerView recyclerView;
     public static CheckBox teamchk;
+    public static Button teamListButton;
     public static AdapterTeamList mAdapter;
     private ActionModeCallback actionModeCallback;
     public static ActionMode actionMode;
@@ -58,6 +61,7 @@ public class ListTeamInfo extends AppCompatActivity {
     private String mJsonString;
     private ArrayList<TeamList> mArrayList;
     private BottomNavigationView navigation;
+    public String utIdx = "";
 
     private Timer timer;
     private TimerTask timerTask;
@@ -71,12 +75,36 @@ public class ListTeamInfo extends AppCompatActivity {
         initComponent2();
         parent_view = findViewById(R.id.lyt_parent);
         teamchk = (CheckBox)findViewById(R.id.teamchk);
+        teamListButton = findViewById(R.id.teamListButton);
+
+        teamListButton.setOnClickListener(new Button.OnClickListener(){
+            @Override
+            public void onClick(View view){
+                Intent intent = new Intent(getApplicationContext(), TeamActivity.class);
+                startActivityForResult(intent, 0);
+            }
+        });
+
         mArrayList = new ArrayList<>();
 
         initToolbar();
 
-        teamListView();
+        teamListView(utIdx);
         initComponent();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        switch (requestCode) {
+            case 0:
+                if (resultCode == -1) {
+                    utIdx = data.getStringExtra("utIdx");
+                    mArrayList = new ArrayList<>();
+                    teamListView(utIdx);
+                    initComponent();
+                }
+        }
+        super.onActivityResult(requestCode, resultCode, data);
     }
 
     private void initTimer() {
@@ -88,7 +116,7 @@ public class ListTeamInfo extends AppCompatActivity {
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        teamListView();
+                        teamListView(utIdx);
 
                         JSONArray jsonArray = null;
                         try {
@@ -228,13 +256,16 @@ public class ListTeamInfo extends AppCompatActivity {
         int itemTotalCount = recyclerView.getAdapter().getItemCount();
         if (lastVisibleItemPosition == itemTotalCount - 1) {
             ContentValues addData = new ContentValues();
+            if (utIdx != null && !utIdx.equals("")) {
+                addData.put("ut_idx", utIdx);
+            }
             String phone = "";
             AESEncryptor aESEncryptor = null;
             try {
                 aESEncryptor = new AESEncryptor();
                 phone = aESEncryptor.encrypt(AppVariables.User_Phone_Number);
             } catch (Exception e){}
-            addData.put("phoneNB", phone);
+            addData.put("phoneNB", URLEncoder.encode(phone));
             addData.put("serverURL", NetworkTask.API_SERVER_ADRESS);
             addData.put("offset", itemTotalCount);
             NetworkTask networkTask = new NetworkTask(NetworkTask.API_TEAM_LIST_PAGE, addData);
@@ -383,16 +414,19 @@ public class ListTeamInfo extends AppCompatActivity {
         //initTimer();
     }
 
-    private void teamListView()
+    private void teamListView(String utIdx)
     {
         ContentValues addData = new ContentValues();
+        if (utIdx != null && !utIdx.equals("")) {
+            addData.put("ut_idx", utIdx);
+        }
         String phone = "";
         AESEncryptor aESEncryptor = null;
         try {
             aESEncryptor = new AESEncryptor();
             phone = aESEncryptor.encrypt(AppVariables.User_Phone_Number);
         } catch (Exception e){}
-        addData.put("phoneNB", phone);
+        addData.put("phoneNB", URLEncoder.encode(phone));
         addData.put("serverURL", NetworkTask.API_SERVER_ADRESS);
         addData.put("offset", 0);
         NetworkTask networkTask = new NetworkTask(NetworkTask.API_TEAM_LIST_PAGE, addData);
@@ -485,10 +519,10 @@ public class ListTeamInfo extends AppCompatActivity {
         icon_set.setColorFilter(getResources().getColor(R.color.mainColor), PorterDuff.Mode.SRC_IN);
         item_set.setIcon(icon_set);
 
-        if(AppVariables.User_Permission.equals("Y")){
-            //MenuItem item_p = menu.findItem(R.id.bottom_team);
-            //item_p.setVisible(true);
-        }
+        /*if(AppVariables.User_Permission.equals("Y")){
+            MenuItem item_p = menu.findItem(R.id.bottom_team);
+            item_p.setVisible(true);
+        }*/
         return true;
     }
 
@@ -500,7 +534,7 @@ public class ListTeamInfo extends AppCompatActivity {
             AlarmDlg.showAlarmDialog(this, "긴급"); //권한 허용 시 비상 알림 띄우기
         }else if(item.getItemId()==R.id.btnRefresh){
             mArrayList = new ArrayList<>();
-            teamListView();
+            teamListView(utIdx);
             initComponent();
         }else if (item.getItemId()== R.id.action_settings){
             Intent intent = new Intent(getApplicationContext(), SettingActivity.class);

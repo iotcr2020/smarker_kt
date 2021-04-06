@@ -30,6 +30,8 @@ import com.anders.SMarker.utils.AlarmDlg;
 import com.anders.SMarker.utils.AppVariables;
 import com.anders.SMarker.utils.Tools;
 
+import java.net.URLEncoder;
+
 public class SettingActivity extends AppCompatActivity implements CompoundButton.OnCheckedChangeListener {
     private Switch SwitchWork;
     TextView str_time_val,str_battery_val,str_sensing_val, str_volume_val, str_acl_val;;
@@ -139,7 +141,7 @@ public class SettingActivity extends AppCompatActivity implements CompoundButton
             aESEncryptor = new AESEncryptor();
             phone = aESEncryptor.encrypt(AppVariables.User_Phone_Number);
         } catch (Exception e){}
-        addData.put("phoneNB", phone);
+        addData.put("phoneNB", URLEncoder.encode(phone));
         addData.put("workFl", Work_fl);
         NetworkTask networkTask = new NetworkTask(NetworkTask.API_WORK_FL, addData);
 
@@ -158,7 +160,7 @@ public class SettingActivity extends AppCompatActivity implements CompoundButton
             aESEncryptor = new AESEncryptor();
             phone = aESEncryptor.encrypt(AppVariables.User_Phone_Number);
         } catch (Exception e){}
-        addData.put("phoneNB", phone);
+        addData.put("phoneNB", URLEncoder.encode(phone));
         NetworkTask networkTask = new NetworkTask(NetworkTask.API_GET_WORK_FL, addData);
 
         try {
